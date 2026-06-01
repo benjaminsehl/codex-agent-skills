@@ -1,6 +1,6 @@
 # Project Status: Assembly
 
-Last updated: 2026-05-29
+Last updated: 2026-06-01
 Current phase: proposal
 Traffic state: pre-live
 
@@ -21,8 +21,25 @@ Traffic state: pre-live
 
 ## Next Recommended Skills
 
-- `spec`
-- `plan`
+- `plan` (break Stage 0 of the 10x roadmap into slices)
+- `build`
+
+## 10x Direction (accepted 2026-06-01)
+
+Founder accepted a measurement-first 10x direction across all four axes (output
+quality, product-vision alignment, code coherence, autonomous operations). The
+core thesis: Assembly is open-loop and the founder is the only sensor on every
+axis; 10x closes four instrumented loops, sequenced so autonomy scales only as
+fast as measured quality, alignment, and coherence allow.
+
+The measurement substrate has two tracks: a sparse, founder-authored
+course-correction ledger (`docs/evals/course-corrections/`) for product
+direction, and agent-graded quality evals (rubrics + fixtures) for code the
+founder will not review. Scope is Ben's personal stack; "ship 1.0" is not a
+blocking gate — do the most important thing at any moment.
+
+- Roadmap: `docs/plans/2026-06-01-assembly-10x-roadmap.md`
+- Decision: `docs/decisions/2026-06-01-measurement-first-10x.md`
 
 ## Current 1.0 Direction
 
@@ -42,4 +59,9 @@ Traffic state: pre-live
 
 ## Next Concrete Action
 
-Review `docs/specs/assembly-1-0.md` and `docs/product/app-factory-north-star.md`; once accepted, use `plan` to turn `docs/plans/2026-05-27-assembly-1-0-release-plan.md` into implementation and proof tasks. Plugin version is now `0.9.0` (testing pass before 1.0).
+Use `plan` to break Stage 0 of `docs/plans/2026-06-01-assembly-10x-roadmap.md`
+(machine-readable status block + CI on the validators + eval-harness skeleton)
+into verifiable slices, then `build` the first slice. The earlier 1.0
+release-plan work (`docs/plans/2026-05-27-assembly-1-0-release-plan.md`) is not
+abandoned but is no longer a blocking gate — pursue whatever is most important
+at the moment.
