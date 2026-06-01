@@ -85,7 +85,7 @@ Scoped here in full (per founder request); sequenced measurement-first below.
 | Output quality | Eval harness | Track B fixtures + rubrics + runner, gated in CI |
 | Product-vision alignment | Course-correction loop | Track A ledger + `vision-keeper` reviewer gating specs/PRs |
 | Code coherence | Coherence loop | Decision/architecture index + `coherence-reviewer` + build-verification gates (lint/type/format/characterization) + read-only desloppification pass |
-| Autonomous operations | Orchestrator | Post-1.0 in-project GM grounded on loops 1–3 as objective stop conditions |
+| Autonomous operations | Orchestrator | Integrate with Hermes (the founder's OpenClaw agent) as the always-on operator, grounded on loops 1–3 as objective stop conditions — see `docs/research/2026-06-01-openclaw-hermes-runtime.md` |
 
 ### Connective tissue (small, unblocks all four)
 
@@ -146,18 +146,34 @@ Exit evidence: the coherence-reviewer flags one real duplication or
 decision-reversal in a fixture; build verification fails on an injected
 type/lint error.
 
-### Stage 4 — Autonomous operations (orchestrator)
+### Stage 4 — Autonomous operations (Hermes / OpenClaw runtime)
 
-- The post-1.0 orchestrator from
-  `docs/plans/2026-05-27-post-1-0-orchestrator-roadmap.md`, **grounded on loops
-  1–3**: its stop conditions are objective (eval regression, ledger/anti-goal
-  violation, coherence drift) instead of relying on the founder as the only
-  quality gate. That is what lets it run many PRs deep between check-ins safely.
-- Begin with the one-week contract spike already specified; do not build the
-  orchestrator until the contract is boringly clear.
+The orchestrator role is substantially already built: the founder runs an
+always-on OpenClaw agent ("Hermes") that can launch Claude Code/Codex as
+background coding sessions from iMessage, with `plan`/`delegate`/`ask`/`off`
+autonomy modes, worktree isolation, and PR follow-through (see
+`docs/research/2026-06-01-openclaw-hermes-runtime.md`). So Stage 4 is
+*integration*, not building an orchestrator from scratch.
 
-Exit evidence: the orchestrator runs a bounded slice end to end, halting on a
-seeded eval regression rather than on a founder check-in.
+- **Target Hermes as a third runtime.** Ship Assembly as an OpenClaw skill
+  bundle (same `SKILL.md` format) plus a SOUL.md that loads the Assembly
+  operating protocol as Hermes's standing rules. Teach the conflict audit the
+  OpenClaw skill namespace.
+- **Add the oversight axis and map it to Hermes modes.** Per-project,
+  founder-set `Oversight:` (`directed` → `plan`/`ask`; `delegated` →
+  `delegate`). The always-ask floor overrides any mode.
+- **Grounded on loops 1–3.** Turning `delegate` up on *product* work is only
+  safe because taste is encoded (ledger), enforced (vision-keeper), and quality
+  self-measures (agent-graded evals). Stop conditions stay objective (eval
+  regression, ledger/anti-goal violation, coherence drift).
+- **Close the loop over iMessage.** A novel product fork on a `delegated`
+  project is texted to the founder as a product-implication question; the
+  answer is written back as a course-correction ledger entry.
+
+Exit evidence: Hermes runs a bounded slice on a `delegated` project end to end,
+auto-merging within ledger taste, and halts to text the founder only on a
+seeded novel fork (recording the answer as a ledger entry) or a seeded eval
+regression — not on routine engineering.
 
 ## The 10x metric for this effort
 
