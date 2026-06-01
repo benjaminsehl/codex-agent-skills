@@ -97,6 +97,15 @@ Scoped here in full (per founder request); sequenced measurement-first below.
 - **Lessons index** — turn retros into a structured index `next` and
   `project-status` actually consult, so the system gets measurably better from
   use instead of merely accumulating prose.
+- **Portable protocol primer** — package the Assembly operating protocol (today
+  split across root `AGENTS.md` and `references/agent-operating-protocol.md`) as
+  one canonical, runtime-agnostic primer any agent can load: a plugin-based
+  runtime (Codex/Claude Code skills) or a bare CLI agent you hand the doc to.
+  The lifecycle skills become thin pointers to it. This keeps behavior
+  consistent across heterogeneous agents — e.g. an always-on agent like Hermes
+  shelling out to Codex/Claude/Pi — with no runtime-specific integration. Keep
+  it thin (orient → phase → gates → leave evidence → escalation) pointing to
+  deep references, per "few entrypoints, deep references."
 
 ## Sequencing
 
@@ -155,6 +164,10 @@ type/lint error.
   quality gate. That is what lets it run many PRs deep between check-ins safely.
 - Begin with the one-week contract spike already specified; do not build the
   orchestrator until the contract is boringly clear.
+- The orchestrator — and any always-on agent like Hermes — consumes Assembly
+  through the portable protocol primer (see connective tissue), not a
+  runtime-specific integration. Hermes is just one such agent; it already runs
+  Codex/Claude/Pi via their CLIs.
 
 Exit evidence: the orchestrator runs a bounded slice end to end, halting on a
 seeded eval regression rather than on a founder check-in.
