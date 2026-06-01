@@ -85,13 +85,13 @@ Scoped here in full (per founder request); sequenced measurement-first below.
 | Output quality | Eval harness | Track B fixtures + rubrics + runner, gated in CI |
 | Product-vision alignment | Course-correction loop | Track A ledger + `vision-keeper` reviewer gating specs/PRs |
 | Code coherence | Coherence loop | Decision/architecture index + `coherence-reviewer` + build-verification gates (lint/type/format/characterization) + read-only desloppification pass |
-| Autonomous operations | Orchestrator | Post-1.0 in-project GM grounded on loops 1–3 as objective stop conditions |
+| Autonomous operations | Operator-ready protocol | Operators such as Hermes, OpenClaw, or a manual harness session consume Assembly's protocol, autonomy profile, and stop conditions |
 
 ### Connective tissue (small, unblocks all four)
 
-- **Machine-readable status block** — ship the YAML block the orchestrator
-  contract already names (`docs/tech-design/post-1-0-orchestrator-contract.md`),
-  so tools, CI, and the orchestrator read state instead of re-parsing prose.
+- **Machine-readable status block** — ship a small YAML block that exposes phase,
+  next gate, autonomy profile, verification contract, and escalation rules so
+  tools, CI, and external operators read state instead of re-parsing prose.
 - **CI** — run the validators (and later the evals) on every PR. Coherence of
   Assembly itself should not rest on an agent remembering four python scripts.
 - **Lessons index** — turn retros into a structured index `next` and
@@ -102,10 +102,12 @@ Scoped here in full (per founder request); sequenced measurement-first below.
   one canonical, runtime-agnostic primer any agent can load: a plugin-based
   runtime (Codex/Claude Code skills) or a bare CLI agent you hand the doc to.
   The lifecycle skills become thin pointers to it. This keeps behavior
-  consistent across heterogeneous agents — e.g. an always-on agent like Hermes
-  shelling out to Codex/Claude/Pi — with no runtime-specific integration. Keep
-  it thin (orient → phase → gates → leave evidence → escalation) pointing to
-  deep references, per "few entrypoints, deep references."
+  consistent across heterogeneous agents and external operators. Hermes,
+  OpenClaw, or a similar always-on system can consume the primer, choose the
+  execution harness, and escalate through its own interface (for example
+  iMessage) without Assembly becoming runtime-specific. Keep it thin (orient →
+  phase → gates → leave evidence → escalation) pointing to deep references, per
+  "few entrypoints, deep references."
 
 ## Sequencing
 
@@ -155,22 +157,22 @@ Exit evidence: the coherence-reviewer flags one real duplication or
 decision-reversal in a fixture; build verification fails on an injected
 type/lint error.
 
-### Stage 4 — Autonomous operations (orchestrator)
+### Stage 4 — Autonomous operations (operator-ready protocol)
 
-- The post-1.0 orchestrator from
-  `docs/plans/2026-05-27-post-1-0-orchestrator-roadmap.md`, **grounded on loops
-  1–3**: its stop conditions are objective (eval regression, ledger/anti-goal
-  violation, coherence drift) instead of relying on the founder as the only
-  quality gate. That is what lets it run many PRs deep between check-ins safely.
-- Begin with the one-week contract spike already specified; do not build the
-  orchestrator until the contract is boringly clear.
-- The orchestrator — and any always-on agent like Hermes — consumes Assembly
-  through the portable protocol primer (see connective tissue), not a
-  runtime-specific integration. Hermes is just one such agent; it already runs
-  Codex/Claude/Pi via their CLIs.
+- Assembly does not own a single orchestrator. It owns the portable protocol,
+  autonomy profile, evidence packet, and stop-condition contract that an operator
+  can consume.
+- External operators such as Hermes, OpenClaw, or a future harness runner use the
+  same protocol to choose work, launch Codex/Claude/Pi/OpenCode sessions or other
+  executors, report progress, and escalate through their own human interface.
+- Objective stop conditions come from loops 1–3: eval regression,
+  ledger/anti-goal violation, coherence drift, failed verification, or an
+  approval boundary. That is what lets a low-oversight project run many PRs deep
+  between founder check-ins without making Assembly runtime-specific.
 
-Exit evidence: the orchestrator runs a bounded slice end to end, halting on a
-seeded eval regression rather than on a founder check-in.
+Exit evidence: an operator or simulated operator runs a bounded slice end to end
+from the portable protocol primer and halts on a seeded eval regression rather
+than on a founder check-in.
 
 ## The 10x metric for this effort
 
