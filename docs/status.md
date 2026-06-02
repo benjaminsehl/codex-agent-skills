@@ -4,6 +4,41 @@ Last updated: 2026-06-01
 Current phase: proposal
 Traffic state: pre-live
 
+<!-- assembly:status — machine-readable mirror of the prose below.
+     Humans read the sections; tools, CI, and external operators read this block.
+     Keep it in sync with the prose; validate_status.py checks its shape. -->
+
+```yaml
+schema: assembly-status/v1
+project: assembly
+phase: proposal
+current_gate: stage-0-foundation
+next_skill: build
+traffic_state: pre-live
+blocked: false
+needs_founder_input: false
+last_verified: 2026-06-01
+autonomy:
+  product_decisions: founder      # always escalate, in product-implication language
+  engineering_decisions: agent    # autonomous, validated by reviewer sub-agents
+  merge: autonomous               # pre-live; founder GO/NO-GO when traffic_state is live
+  deploy: autonomous              # follows the approved merge
+verification:
+  ci: .github/workflows/validate.yml
+  validators:
+    - python3 plugins/assembly/scripts/validate_plugin.py
+    - python3 plugins/assembly/scripts/validate_skill_graph.py
+    - python3 plugins/assembly/scripts/validate_status.py
+    - python3 plugins/assembly/scripts/audit_skill_conflicts.py
+escalation_floor:                 # never autonomous, in any traffic state
+  - money-movement
+  - credentials-or-secrets
+  - external-messaging
+  - privacy-sensitive-data
+  - irreversible-destructive-ops
+  - merge-to-default-when-live
+```
+
 ## Autonomy
 
 - Traffic state: pre-live. Assembly is not yet depended on by real users, so agents run the roadmap autonomously — open PRs, run reviewer sub-agents, merge, and (where a deploy path exists) deploy — escalating only product/UX decisions and always-ask floor items. Flip to `live` when external builders depend on the published plugin and you want merging to the default branch to become a founder GO/NO-GO (deploy then follows the approved merge).
@@ -59,9 +94,10 @@ blocking gate — do the most important thing at any moment.
 
 ## Next Concrete Action
 
-Use `plan` to break Stage 0 of `docs/plans/2026-06-01-assembly-10x-roadmap.md`
-(machine-readable status block + CI on the validators + eval-harness skeleton)
-into verifiable slices, then `build` the first slice. The earlier 1.0
-release-plan work (`docs/plans/2026-05-27-assembly-1-0-release-plan.md`) is not
-abandoned but is no longer a blocking gate — pursue whatever is most important
-at the moment.
+Stage 0 of `docs/plans/2026-06-01-assembly-10x-roadmap.md` is in progress. This
+slice adds CI (`.github/workflows/validate.yml`) running the validators on every
+PR, the machine-readable status block above, and `validate_status.py` to keep it
+honest. Remaining Stage 0 slice: the eval-harness skeleton (a runner, the rubric
+file format, and 1–2 fixtures). The earlier 1.0 release-plan work
+(`docs/plans/2026-05-27-assembly-1-0-release-plan.md`) is not abandoned but is no
+longer a blocking gate — pursue whatever is most important at the moment.
