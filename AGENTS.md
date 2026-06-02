@@ -45,7 +45,10 @@ Run before finalizing changes:
 ```bash
 python3 plugins/assembly/scripts/validate_plugin.py
 python3 plugins/assembly/scripts/validate_skill_graph.py
+python3 plugins/assembly/scripts/validate_status.py
 python3 plugins/assembly/scripts/audit_skill_conflicts.py
-python3 -m py_compile plugins/assembly/scripts/validate_plugin.py plugins/assembly/scripts/validate_skill_graph.py plugins/assembly/scripts/scaffold_project.py plugins/assembly/scripts/audit_skill_conflicts.py
+python3 -m py_compile plugins/assembly/scripts/*.py
 git diff --check
 ```
+
+CI (`.github/workflows/validate.yml`) runs these on every PR and on `main`.

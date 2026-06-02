@@ -1,0 +1,46 @@
+name: validate
+
+# Stage 0 of the 10x roadmap: Assembly's own coherence should not rest on an
+# agent remembering to run the validators. Run them on every PR and on main.
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # Only the status validator needs a dependency; the rest are stdlib-only.
+      - name: Install dependencies
+        run: python3 -m pip install --quiet pyyaml
+
+      - name: Validate plugin shape
+        run: python3 plugins/assembly/scripts/validate_plugin.py
+
+      - name: Validate skill graph
+        run: python3 plugins/assembly/scripts/validate_skill_graph.py
+
+      - name: Validate machine-readable status block
+        run: python3 plugins/assembly/scripts/validate_status.py
+
+      - name: Audit skill conflicts
+        run: python3 plugins/assembly/scripts/audit_skill_conflicts.py
+
+      - name: Compile scripts
+        run: python3 -m py_compile plugins/assembly/scripts/*.py
+
+      - name: Whitespace check
+        run: |
+          base="${{ github.event.pull_request.base.sha }}"
+          if [ -n "$base" ]; then
+            git diff --check "$base" "${{ github.sha }}"
+          else
+            git show --check HEAD
+          fi
