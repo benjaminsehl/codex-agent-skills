@@ -24,7 +24,7 @@ Define what should be built before coding starts. Surface user pain, clarify suc
    - Fresh discovery exists in `docs/discovery/` or a recent spec → lightweight spec (objective, success criteria, scope, open questions).
    - Thin or stale signals → full spec (objective, users, pain, wedge, stack, commands, structure, style, testing, boundaries, success criteria, open questions).
 5. Surface assumptions and explicit non-goals before treating the spec as final.
-6. Save the spec as `SPEC.md`, `docs/SPEC.md`, or `docs/projects/<slice>/spec.md`, following the target repo's conventions.
+6. Save the spec to `.agents/specs/` (Assembly-native) or the target repo's convention (for example `SPEC.md` or `.agents/projects/<slice>/spec.md`).
 7. Stop at a founder review gate. Do not auto-continue into planning.
 
 ## Verification

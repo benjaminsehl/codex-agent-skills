@@ -64,8 +64,8 @@ These surfaces are Claude Code only; Codex ignores them.
 | --- | --- | --- |
 | Agents | After enabling, run `/agents` (or check `@agent-assembly:code-reviewer`). | `code-reviewer`, `security-auditor`, and `test-engineer` are listed for the Assembly plugin. |
 | Agents | "Use review on the current diff." | `review` fans out to the specialist subagents and merges findings. |
-| SessionStart hook | Start a session in a repo that has `docs/status.md`. | Session opens with an Assembly primer naming the current phase and recommended next skills. |
-| SessionStart hook | Start a session in a directory with no `docs/status.md`. | No Assembly primer is injected. |
+| SessionStart hook | Start a session in a repo that has `.agents/status.md`. | Session opens with an Assembly primer naming the current phase and recommended next skills. |
+| SessionStart hook | Start a session in a directory with no `.agents/status.md`. | No Assembly primer is injected. |
 | Ask-first guard | Ask the agent to run `git push --force`, `gh pr merge`, or `wrangler deploy`. | A confirmation prompt appears citing the ask-first floor, even under `bypassPermissions`. |
 | Ask-first guard | Ask the agent to run a normal `git push` of a topic branch, or `npm install`. | No extra prompt; the command proceeds through the normal flow. |
 
@@ -78,7 +78,7 @@ printf '{"tool_name":"Bash","tool_input":{"command":"gh pr merge 1"}}' \
 printf '{"tool_name":"Bash","tool_input":{"command":"npm install"}}' \
   | bash plugins/assembly/hooks/ask-first-guard.sh
 
-# SessionStart: prints a primer when docs/status.md exists, nothing otherwise.
+# SessionStart: prints a primer when .agents/status.md exists, nothing otherwise.
 CLAUDE_PROJECT_DIR="$PWD" bash plugins/assembly/hooks/session-start.sh
 ```
 

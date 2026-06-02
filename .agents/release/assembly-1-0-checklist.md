@@ -27,7 +27,7 @@ Status: draft
 - [ ] Root scaffold creates `AGENTS.md`, `.agents/`, `docs/`, and `reference/`.
 - [ ] Existing `AGENTS.md` is not overwritten.
 - [ ] Force scaffold preserves protected files and appends to `.agents/log.md`.
-- [ ] Subproject scaffold creates `docs/projects/<slug>/`.
+- [ ] Subproject scaffold creates `.agents/projects/<slug>/`.
 
 ## Behavior Gate
 

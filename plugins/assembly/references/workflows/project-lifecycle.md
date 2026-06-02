@@ -15,8 +15,8 @@ Owned by the `init` skill. `project-status` and `next` route to `init` when proj
 
 Use this mode when project docs are missing, the user is restarting a project, or the user asks to start a new project, subproject, or substantial project slice.
 
-- Default docs root: `docs/`.
-- Default subproject root: `docs/projects/<slug>/`.
+- Default roots: `.agents/` (operational trail) and `docs/` (human docs).
+- Default subproject root: `.agents/projects/<slug>/`.
 - Default agent-only root: `.agents/`.
 - Default source-material root: `reference/`.
 - Use `scripts/scaffold_project.py` for deterministic scaffolds.
@@ -43,11 +43,11 @@ Use this mode when the user asks what phase the project is in, what to do next, 
 Check:
 
 - Root and nearest subproject `status.md`.
-- `docs/phases/`.
+- `.agents/phases/`.
 - `docs/product/`.
 - `docs/decisions/`.
-- `docs/specs/`, `docs/plans/`, `docs/tech-design/`, and `docs/research/`.
-- `docs/prototypes/`, `docs/qa/`, and `docs/release/`.
+- `.agents/specs/`, `.agents/plans/`, `docs/tech-design/`, and `.agents/research/`.
+- `.agents/prototypes/`, `.agents/qa/`, and `.agents/release/`.
 - Open tasks, recent commits, issues, PRs, and local instructions.
 
 Answer with:
@@ -72,7 +72,7 @@ Use this mode when status is stale, phase is ambiguous, core context is missing,
 - Compare actual artifacts to `references/project-phases.md`.
 - Separate missing prerequisites from optional polish.
 - Identify decisions or principles that explain the current shape before recommending changes.
-- Update `docs/status.md` when project-doc edits are in scope.
+- Update `.agents/status.md` when project-doc edits are in scope.
 - If status cannot be updated, state why.
 
 Repair output:

@@ -123,7 +123,7 @@ Riskiest viability assumption for the open-source surface: other builders will o
 
 - Fresh install and upgrade works from `benjaminsehl/assembly` in both Codex and Claude Code. Current evidence: `codex plugin marketplace upgrade assembly` confirmed the local marketplace install was current at `0.8.3` after PR #2; Claude Code install/upgrade still needs a fresh smoke pass.
 - Fresh agent session sees `assembly:next` in both runtimes. Current evidence: `assembly:next` is available from the installed `0.8.3` Codex bundle; this should be rechecked for the 1.0 release candidate in both runtimes.
-- Assembly itself uses root `docs/` and status successfully. Current evidence: `docs/status.md` now records post-merge status and next-gate routing.
+- Assembly itself uses root `docs/` and status successfully. Current evidence: `.agents/status.md` now records post-merge status and next-gate routing.
 - Scaffolded projects separate durable docs, agent-only `.agents/` context, and raw `reference/` material.
 - At least one real external project, ideally Hyper or CFO, gets a useful Assembly retrofit.
 - `next` behaves well in at least proposal, build, and release-like states.

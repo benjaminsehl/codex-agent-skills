@@ -7,7 +7,7 @@ The inspected Hyper checkout showed valuable artifacts spread across:
 - Top-level product and design docs.
 - `.agents/` kernel-style notes, logs, knowledge files, and decisions.
 - Raw source material that should become `reference/` instead of project docs.
-- `docs/plans/` dated specs and implementation plans.
+- `.agents/plans/` dated specs and implementation plans.
 - API docs and migration plans.
 
 This is useful context, but it creates a resume problem: a future session can find many documents without a single current phase, next gate, or project verdict.
@@ -17,8 +17,8 @@ This is useful context, but it creates a resume problem: a future session can fi
 1. Use `project-status` first. Do not move files before understanding which project slice is being assessed.
 2. Create phase docs in the root docs tree:
    - Whole app: `/Users/sai/hyper/docs/`.
-   - App slice: `/Users/sai/hyper/docs/projects/<slug>/`.
-   - Nested feature: `/Users/sai/hyper/docs/projects/<parent>/projects/<slug>/`.
+   - App slice: `/Users/sai/hyper/.agents/projects/<slug>/`.
+   - Nested feature: `/Users/sai/hyper/.agents/projects/<parent>/projects/<slug>/`.
 3. Link existing artifacts instead of copying them:
    - Product/design docs into proposal.
    - Existing specs and dated plans into build.
@@ -31,7 +31,7 @@ This is useful context, but it creates a resume problem: a future session can fi
    - Assumptions and principles.
    - Prototype verdict, if no prototype phase existed.
    - Release grading and follow-up learning.
-5. Keep `.agents/` for agent-only operating context if the repo already uses it. Promote durable product, technical, or decision context into `docs/`; keep raw source material in `reference/`.
+5. Keep `.agents/` for agent-only operating context if the repo already uses it. Promote durable product, design, or decision context that helps a human into `docs/`, and the operational trail into `.agents/`; keep raw source material in `reference/`.
 
 ## Retrofit Output
 

@@ -16,10 +16,10 @@ Use this protocol at the start of meaningful project work and whenever the user 
 
 ## Orient First
 
-1. Read `docs/status.md` if it exists.
-2. If the work is inside a subproject, read the nearest `docs/projects/**/status.md` that matches the requested area.
+1. Read `.agents/status.md` if it exists.
+2. If the work is inside a subproject, read the nearest `.agents/projects/**/status.md` that matches the requested area.
 3. Check `.agents/log.md` and relevant `.agents/notes/` when resuming agent work or diagnosing skipped gates.
-4. Check `docs/phases/`, `docs/product/`, `docs/decisions/`, `docs/specs/`, `docs/plans/`, `docs/tech-design/`, `docs/research/`, `docs/prototypes/`, `docs/qa/`, `docs/release/`, and relevant child `projects/`.
+4. Check `.agents/phases/`, `docs/product/`, `docs/decisions/`, `.agents/specs/`, `.agents/plans/`, `docs/tech-design/`, `.agents/research/`, `.agents/prototypes/`, `.agents/qa/`, `.agents/release/`, and relevant child `projects/`.
 5. State the current phase and the skill you are using when that materially affects the work.
 6. Before hardening product direction, planning, or building, confirm the trail answers what is being built, why it matters, and what good looks like.
 
@@ -35,9 +35,9 @@ Assembly optimizes for the founder's attention. Two axes decide when to act auto
   - Engineering decisions include: architecture, libraries, file and module layout, test strategy, refactors, commit and branch hygiene, opening a PR and whether it is draft or ready, and merging engineering-only changes (subject to traffic state).
 - When a step is mixed, split it: take the engineering decision autonomously and escalate only the product/UX part, in product-implication language.
 
-### Axis 2 — Traffic state (founder-declared in `docs/status.md`, default `pre-live`)
+### Axis 2 — Traffic state (founder-declared in `.agents/status.md`, default `pre-live`)
 
-`docs/status.md` carries a `Traffic state:` field. Only the founder sets it; the agent never silently flips it. Absent or unknown means `pre-live`.
+`.agents/status.md` carries a `Traffic state:` field. Only the founder sets it; the agent never silently flips it. Absent or unknown means `pre-live`.
 
 - `pre-live` — no real users, no production traffic. When no product/UX decision is open and no always-ask floor item is involved, the agent runs the whole roadmap autonomously: write code, open PRs (its own call on draft vs ready), run reviewer sub-agents, merge to the default branch, and deploy — across as many PRs as the roadmap needs, without per-action check-ins.
 - `live` — real users and real traffic. Everything up to merge stays autonomous (write code, open PRs, run reviewer sub-agents). Merging to the default branch becomes a founder GO/NO-GO: the agent prepares the release decision (verification, risk, rollback) and asks before merging; deploy then follows the approved merge.
@@ -117,7 +117,7 @@ Use repair mode when:
 - Required artifacts for the apparent phase are missing or contradictory.
 - The user asks "what should we do?" and the answer depends on repairing project context.
 - The project has skipped gates that should be recorded before more work continues.
-- `docs/status.md` is stale, absent, or no longer matches the actual work.
+- `.agents/status.md` is stale, absent, or no longer matches the actual work.
 
 ## Prompt Clarity
 
@@ -146,7 +146,7 @@ Use this shape:
 I can do that, but we are missing <artifact>. The safer next step is <skill> so we can <reason>. If you still want to proceed, I will continue and mark this as a skipped gate.
 ```
 
-If the user insists, proceed unless the request crosses a hard safety boundary. In the final response, record the skipped gate and risk. When editing project docs is in scope, also update `docs/status.md`.
+If the user insists, proceed unless the request crosses a hard safety boundary. In the final response, record the skipped gate and risk. When editing project docs is in scope, also update `.agents/status.md`.
 
 ## Hard Boundaries
 

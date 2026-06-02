@@ -6,10 +6,10 @@ This project follows a phase-aware product-building workflow.
 
 Before meaningful work, read:
 
-- `docs/status.md`
-- The nearest matching `docs/projects/**/status.md`, if working in a subproject
+- `.agents/status.md`
+- The nearest matching `.agents/projects/**/status.md`, if working in a subproject
 - `.agents/AGENT-GUIDANCE.md`
-- Relevant files under `docs/phases/`, `docs/product/`, `docs/decisions/`, `docs/specs/`, and `docs/plans/`
+- Relevant files under `.agents/phases/`, `docs/product/`, `docs/decisions/`, `.agents/specs/`, and `.agents/plans/`
 
 If these files do not exist yet, use `init` to scaffold them.
 
@@ -48,7 +48,7 @@ Reserve founder attention for product and UX decisions; run engineering autonomo
 
 - Product/UX decisions — what gets built and why, user-facing behavior, copy, flow, scope cuts that change the experience, naming, pricing — always escalate to the founder in product-implication language (user scenarios, not engineering detail).
 - Engineering decisions are the agent's call, validated by reviewer sub-agents (`code-reviewer`, `security-auditor`, `test-engineer`), not by founder approval. Opening a PR, choosing draft vs ready, and merging engineering-only changes are not interruptions.
-- Traffic state lives in `docs/status.md` (`Traffic state:`, founder-set, default `pre-live`). When `pre-live`, run the whole roadmap — PRs, merges, deploys — autonomously. When `live`, keep opening and reviewing PRs autonomous and ask the founder GO/NO-GO before merging to the default branch; deploy follows the approved merge.
+- Traffic state lives in `.agents/status.md` (`Traffic state:`, founder-set, default `pre-live`). When `pre-live`, run the whole roadmap — PRs, merges, deploys — autonomously. When `live`, keep opening and reviewing PRs autonomous and ask the founder GO/NO-GO before merging to the default branch; deploy follows the approved merge.
 - Always-ask floor (any traffic state): money, credentials, external messaging, privacy-sensitive data, irreversible destructive operations, and merging to the default branch when live.
 
 Full detail is in `.agents/AGENT-GUIDANCE.md`.
@@ -61,7 +61,7 @@ If the prompt is unclear, state what you think the user wants, name the current 
 
 If the user asks to skip ahead while important phase context is missing, warn them, name the missing artifact, and recommend the double-back skill first.
 
-If the user insists, proceed unless the request crosses a hard safety, privacy, destructive, credential, money movement, external messaging, or confirmation boundary. Record skipped gates in the final response and update `docs/status.md` when project-doc edits are in scope.
+If the user insists, proceed unless the request crosses a hard safety, privacy, destructive, credential, money movement, external messaging, or confirmation boundary. Record skipped gates in the final response and update `.agents/status.md` when project-doc edits are in scope.
 
 ## Paper Trail
 

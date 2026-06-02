@@ -49,7 +49,7 @@ wanted instead, and the generalizable principle behind the correction.
   and PR against the accumulated corrections: "does this repeat a correction Ben
   already made? does it trip an anti-goal?" The ledger is the alignment loop and
   the alignment eval at once.
-- Lives at `docs/evals/course-corrections/` (see that directory's README for the
+- Lives at `.agents/evals/course-corrections/` (see that directory's README for the
   entry template).
 
 This is how Ben's taste gets encoded once and stops being re-litigated. It is
@@ -115,7 +115,7 @@ Measurement-first. Each stage leaves evidence the next stage depends on.
 
 ### Stage 0 — Foundation (do first; cheap, unblocks everything)
 
-- Machine-readable status block in `docs/status.md`.
+- Machine-readable status block in `.agents/status.md`.
 - CI workflow running the four validators on every PR.
 - Eval harness skeleton: a runner, the rubric file format, and 1–2 fixtures.
 
@@ -124,7 +124,7 @@ the runner end to end.
 
 ### Stage 1 — Alignment loop (founder's primary interface)
 
-- `docs/evals/course-corrections/` ledger live, with the entry template.
+- `.agents/evals/course-corrections/` ledger live, with the entry template.
 - `vision-keeper` persona that loads the ledger + north-star + anti-goals and
   gates specs, plans, and PRs against them; fans into `review` and `ship`.
 - Backfill the ledger from existing decisions where a founder correction is

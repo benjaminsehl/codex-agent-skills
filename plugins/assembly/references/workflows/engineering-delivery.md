@@ -17,7 +17,7 @@ Use this reference from `spec`, `plan`, `build`, `test`, `review`, and `code-sim
 - Run mini-discovery before drafting (max 4 questions per round, focused on user, pain, wedge). Always fire, even when the spec is being repaired or invoked via routing from `build`.
 - Tier the spec by signal density: lightweight when fresh discovery exists; full when signals are thin.
 - Surface assumptions, non-goals, and open questions before treating the spec as final.
-- Save the spec using the repo convention, usually `SPEC.md` or `docs/SPEC.md`.
+- Save the spec to `.agents/specs/` (Assembly-native) or the repo convention, for example `SPEC.md`.
 - Stop at founder review. Do not auto-continue into planning.
 
 ## Plan

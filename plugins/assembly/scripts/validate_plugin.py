@@ -525,7 +525,7 @@ def validate_scaffold_behavior(scaffold_script: Path) -> None:
             ".agents/log.md",
             ".agents/notes/README.md",
             "reference/README.md",
-            "docs/status.md",
+            ".agents/status.md",
             ".claude/settings.json",
             ".codex/config.toml",
         ):
@@ -568,8 +568,6 @@ def validate_scaffold_behavior(scaffold_script: Path) -> None:
         forced = run_scaffold(
             scaffold_script,
             root,
-            "--parent",
-            "docs",
             "--name",
             "Child Project",
             "--slug",
@@ -600,8 +598,10 @@ def validate_scaffold_behavior(scaffold_script: Path) -> None:
             fail("force scaffold did not append to .agents/log.md")
         if ".agents/log.md" not in reported_paths(forced, "updated"):
             fail("force scaffold did not report .agents/log.md as updated")
-        if not (root / "docs" / "projects" / "child" / "status.md").is_file():
-            fail("force scaffold did not create child project status.md")
+        if not (root / ".agents" / "projects" / "child" / "status.md").is_file():
+            fail("force scaffold did not create child project operational status.md")
+        if not (root / "docs" / "projects" / "child" / "README.md").is_file():
+            fail("force scaffold did not create child project human README.md")
 
         log_dir_root = Path(temp_dir) / "log-dir-project"
         (log_dir_root / ".agents" / "log.md").mkdir(parents=True)

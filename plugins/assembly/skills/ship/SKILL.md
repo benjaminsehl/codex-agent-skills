@@ -9,7 +9,7 @@ description: Use when deciding whether a change is ready to release; produces a 
 
 Decide whether a change is ready to release. The decision is binary: `GO` or `NO-GO`. A `GO` requires verification evidence and a rollback plan. Ship owns GitHub conversation: it opens the PR for branches `build` has pushed, decides draft vs ready, runs reviewer sub-agents, merges, and deploys.
 
-How far a `GO` carries itself depends on traffic state (read `Traffic state:` in `docs/status.md`; absent or unknown means `pre-live`):
+How far a `GO` carries itself depends on traffic state (read `Traffic state:` in `.agents/status.md`; absent or unknown means `pre-live`):
 
 - `pre-live`: a `GO` proceeds autonomously through merge and deploy. No founder check-in unless a product/UX decision is open or an always-ask floor item is involved.
 - `live`: a `GO` carries autonomously up to a reviewed, ready PR, then asks the founder before merging to the default branch. The merge gate is a single product-impact question, not an engineering one; deploy follows the approved merge.

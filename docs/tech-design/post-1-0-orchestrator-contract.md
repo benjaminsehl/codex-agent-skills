@@ -26,16 +26,16 @@ The orchestrator should read:
 - `.agents/AGENT-GUIDANCE.md`
 - `.agents/log.md`
 - `.agents/notes/`
-- `docs/status.md`
-- `docs/phases/`
+- `.agents/status.md`
+- `.agents/phases/`
 - `docs/product/`
 - `docs/decisions/`
-- `docs/specs/`
-- `docs/plans/`
-- `docs/prototypes/`
-- `docs/qa/`
-- `docs/release/`
-- `docs/projects/`
+- `.agents/specs/`
+- `.agents/plans/`
+- `.agents/prototypes/`
+- `.agents/qa/`
+- `.agents/release/`
+- `.agents/projects/`
 - `reference/`
 - Git branch, commits, PRs, comments, checks, and reviews
 

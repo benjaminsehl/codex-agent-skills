@@ -37,7 +37,7 @@ Every full project or substantial project slice follows four phases:
 3. **Build:** implement approved slices with specs, plans, tests, reviews, and tech-design updates.
 4. **Release:** run QA and polish, decide go/no-go, ship or hold intentionally, grade against proposal, and capture follow-up learning.
 
-Projects are recursive. A repo can be a project, and clients, agent layers, releases, or features inside it can be subprojects with their own phase trail under `docs/projects/<slug>/`.
+Projects are recursive. A repo can be a project, and clients, agent layers, releases, or features inside it can be subprojects with their own phase trail under `.agents/projects/<slug>/`.
 
 Agent-only operating material belongs under `.agents/`, with root `AGENTS.md` kept as the visible entrypoint. The scaffold writes the reusable operating protocol to `.agents/AGENT-GUIDANCE.md` and keeps raw source material in top-level `reference/`.
 
@@ -77,7 +77,7 @@ Always:
 - Validate before calling the plugin install-ready.
 - Leave material GitHub-backed work in a reviewable PR unless the user asks for local-only changes.
 - Escalate product/UX decisions to the founder in product-implication language; decide engineering autonomously and validate it with reviewer sub-agents.
-- Read the `Traffic state:` field in `docs/status.md` before merging, deploying, or shipping; treat absent or unknown as `pre-live`.
+- Read the `Traffic state:` field in `.agents/status.md` before merging, deploying, or shipping; treat absent or unknown as `pre-live`.
 
 Autonomy by traffic state:
 

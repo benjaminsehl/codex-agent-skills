@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the machine-readable status block in docs/status.md.
+"""Validate the machine-readable status block in .agents/status.md.
 
 Stage 0 of the 10x roadmap makes project state machine-readable so tools, CI,
 and external operators can read it instead of re-parsing prose. This validator
@@ -20,7 +20,7 @@ from pathlib import Path
 
 # scripts/ -> assembly/ -> plugins/ -> repo root
 REPO_ROOT = Path(__file__).resolve().parents[3]
-STATUS_FILE = REPO_ROOT / "docs" / "status.md"
+STATUS_FILE = REPO_ROOT / ".agents" / "status.md"
 
 SCHEMA = "assembly-status/v1"
 REQUIRED_TOP_LEVEL = {
@@ -52,7 +52,7 @@ def extract_block(text: str) -> str:
         if f"schema: {SCHEMA}" in block:
             return block
     raise StatusError(
-        f"no ```yaml block with `schema: {SCHEMA}` found in docs/status.md"
+        f"no ```yaml block with `schema: {SCHEMA}` found in .agents/status.md"
     )
 
 

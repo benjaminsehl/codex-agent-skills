@@ -32,7 +32,7 @@ That loop is easier to debug than an autonomous planner with hidden state.
 
 ### Design For Agent-Computer Interfaces
 
-The repo structure is an interface for agents. `docs/status.md`, `.agents/log.md`, specs, plans, decisions, QA notes, release notes, and PRs should be easy for agents to inspect without loading the whole repository.
+The repo structure is an interface for agents. `.agents/status.md`, `.agents/log.md`, specs, plans, decisions, QA notes, release notes, and PRs should be easy for agents to inspect without loading the whole repository.
 
 ### Use Multi-Agent Work Sparingly
 
