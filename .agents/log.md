@@ -20,6 +20,10 @@ Append meaningful agent handoff events, skipped gates, recovery notes, and proje
 - Synced `main` after PR #2 merged as `15cb36a`, verified the local Assembly marketplace bundle is already upgraded to `0.8.3`, and started the 1.0 spec branch.
 - Drafted `docs/specs/assembly-1-0.md` as the Codex-first 1.0 behavior spec with Hermes orchestration captured as the post-1.0 horizon.
 
+## 2026-06-02
+
+- Captured founder ideation on **capability assembly** as `docs/product/discovery-capability-assembly.md`: a thin `assemble` step that composes skills.sh's `find-skills` to load the best stack-specific skills and records them in `AGENTS.md`. Framed as a new axis (capability acquisition), distinct from the 10x measurement loops. Recommended next skill: `spec` (when founder is ready). Status updated to point to the brief.
+
 ## 2026-05-27
 
 - Used Assembly project-status/spec/plan/build flow to sharpen the 1.0 branch around a human-led agentic app factory vision.

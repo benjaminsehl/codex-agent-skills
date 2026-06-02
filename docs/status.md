@@ -41,6 +41,17 @@ blocking gate — do the most important thing at any moment.
 - Roadmap: `docs/plans/2026-06-01-assembly-10x-roadmap.md`
 - Decision: `docs/decisions/2026-06-01-measurement-first-10x.md`
 
+## New Thread: Capability Assembly (captured 2026-06-02)
+
+Founder ideation captured as a discovery brief: a thin capability-assembly step
+that composes skills.sh's `find-skills` to load the best domain skills for a
+project's stack (e.g. `cloudflare/skills` for a Cloudflare project) and records
+them in `AGENTS.md` so every session leverages them. This is a **new axis —
+capability acquisition** — distinct from the four measurement loops of the 10x
+roadmap; recorded as its own thread, not yet specced.
+
+- Brief: `docs/product/discovery-capability-assembly.md`
+
 ## Current 1.0 Direction
 
 - Candidate wedge: install Assembly, scaffold a repo, say `next`, and have Codex orient to phase, missing context, and the next useful workflow without guessing or silently taking product authority.
