@@ -603,6 +603,26 @@ def validate_scaffold_behavior(scaffold_script: Path) -> None:
         if not (root / "docs" / "projects" / "child" / "README.md").is_file():
             fail("force scaffold did not create child project human README.md")
 
+        # Nested subproject: --parent accepts a tree-prefixed path and must
+        # resolve it to the child's operational trail, not a literal `.agents`
+        # ancestor slug.
+        run_scaffold(
+            scaffold_script,
+            root,
+            "--parent",
+            ".agents/projects/child",
+            "--name",
+            "Grandchild",
+            "--slug",
+            "grand",
+        )
+        nested_ops = root / ".agents" / "projects" / "child" / "projects" / "grand" / "status.md"
+        nested_docs = root / "docs" / "projects" / "child" / "projects" / "grand" / "README.md"
+        if not nested_ops.is_file():
+            fail("nested scaffold did not create grandchild operational status.md")
+        if not nested_docs.is_file():
+            fail("nested scaffold did not create grandchild human README.md")
+
         log_dir_root = Path(temp_dir) / "log-dir-project"
         (log_dir_root / ".agents" / "log.md").mkdir(parents=True)
         log_dir_result = run_scaffold(scaffold_script, log_dir_root, "--name", "Log Dir")

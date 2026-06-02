@@ -188,10 +188,11 @@ Scaffold a subproject:
 ```bash
 python3 plugins/assembly/scripts/scaffold_project.py \
   --root /path/to/repo \
-  --parent docs \
   --name "Agent Layer" \
   --slug agent-layer
 ```
+
+For a nested subproject, add `--parent <parent-slug>`.
 
 The script skips existing files by default. If the target repo already has `AGENTS.md`, the scaffold will not overwrite it; merge [templates/AGENTS.md](plugins/assembly/templates/AGENTS.md) manually.
 

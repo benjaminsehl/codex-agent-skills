@@ -57,11 +57,16 @@ def projects_suffix(parent_slugs: list[str], slug: str) -> Path:
 def parse_parent(value: str) -> list[str]:
     """Parse --parent into an ordered list of ancestor slugs.
 
-    Accepts a slug (``agent-layer``) or a projects path
-    (``projects/agent-layer/projects/api``). The repo root project is the empty
-    list, so a top-level subproject needs no --parent.
+    Accepts a slug (``agent-layer``), a projects path
+    (``projects/agent-layer/projects/api``), or a tree-prefixed path
+    (``.agents/projects/agent-layer`` or ``docs/projects/agent-layer``). The
+    repo root project is the empty list, so a top-level subproject needs no
+    --parent.
     """
-    tokens = [tok for tok in re.split(r"[\\/]+", value.strip()) if tok and tok != "projects"]
+    cleaned = value.strip()
+    # Tolerate an explicit tree prefix so both .agents/ and docs/ forms resolve.
+    cleaned = re.sub(r"^[\\/]*(?:\.agents|docs)(?=[\\/])", "", cleaned)
+    tokens = [tok for tok in re.split(r"[\\/]+", cleaned) if tok and tok != "projects"]
     return [slugify(tok) for tok in tokens]
 
 

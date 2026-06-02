@@ -135,14 +135,15 @@ For a child project inside an existing project workspace:
 ```bash
 python3 plugins/assembly/scripts/scaffold_project.py \
   --root /path/to/repo \
-  --parent docs \
   --name "Agent Layer" \
   --slug agent-layer
 ```
 
+For a nested subproject, add `--parent <parent-slug>`.
+
 If `AGENTS.md` already exists, the scaffold reports a manual merge notice instead of overwriting it. Review `plugins/assembly/templates/AGENTS.md` and merge the phase-aware protocol into the existing project instructions by hand.
 
-The scaffold keeps agent-only operating material out of `docs/`:
+The scaffold writes the operational trail to `.agents/` and human docs to `docs/`. Root-level agent material stays put:
 
 - Root `AGENTS.md` stays as the visible entrypoint.
 - `.agents/AGENT-GUIDANCE.md` receives the reusable operating protocol.
