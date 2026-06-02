@@ -51,6 +51,7 @@ capability acquisition** — distinct from the four measurement loops of the 10x
 roadmap; recorded as its own thread, not yet specced.
 
 - Brief: `docs/product/discovery-capability-assembly.md`
+- Spec: `docs/specs/capability-assembly.md` (draft for review). Founder mini-discovery (2026-06-02) set: new `assemble` skill, sniff-then-confirm stack detection, persist to both `AGENTS.md` + status block, auto-install verified matches. Next gate: founder accepts the spec, then `plan`.
 
 ## Current 1.0 Direction
 

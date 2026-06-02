@@ -23,6 +23,7 @@ Append meaningful agent handoff events, skipped gates, recovery notes, and proje
 ## 2026-06-02
 
 - Captured founder ideation on **capability assembly** as `docs/product/discovery-capability-assembly.md`: a thin `assemble` step that composes skills.sh's `find-skills` to load the best stack-specific skills and records them in `AGENTS.md`. Framed as a new axis (capability acquisition), distinct from the 10x measurement loops. Recommended next skill: `spec` (when founder is ready). Status updated to point to the brief.
+- Ran `spec` on capability assembly → `docs/specs/capability-assembly.md` (draft for review). Mini-discovery decisions: new `assemble` public skill (13→14), sniff-then-confirm stack detection, persist to both `AGENTS.md` Capabilities + machine-readable status block, auto-install verified matches (always-ask floor on top). Stopped at founder review gate; next is `plan`.
 
 ## 2026-05-27
 
