@@ -45,9 +45,13 @@ skill rather than rebuilding a registry:
 
 1. Given the project's stack, run `find-skills` / `npx skills find <stack queries>`
    to discover relevant skills from the skills.sh registry.
-2. Install the vetted matches with `npx skills add <source>`. `find-skills`
-   already gates on reputation (prefers 1K+ installs, checks source-repo stars),
-   so curation is largely inherited, not built.
+2. **Verify before installing.** `find-skills` does not auto-gate search results —
+   it instructs the agent never to recommend a skill from search alone, and to
+   check install count (prefer 1K+), source-repo reputation, and GitHub stars
+   first. The `assemble` skill must perform this verification step before any
+   `npx skills add <source>`; this matters most for niche stack queries, where
+   search can surface low-reputation skills (including ones shipping scripts/hooks).
+   Curation is a step `assemble` runs, not a property inherited for free.
 3. Persist the chosen skills into **`AGENTS.md`** — a "Capabilities" section
    listing each assembled skill (name, source, why) — so every future session
    loads them. This is the "update the agents file" piece Assembly owns.
@@ -88,11 +92,13 @@ work, and so it does not get dropped.
 
 Founder's instinct (correct, mostly): this is not the concern it would be for code
 dependencies. A skill is instructions the agent reads — closer to fetching docs
-than installing a package — and `find-skills` already applies a reputation floor.
-The single honest caveat: skills *can* ship scripts/hooks (Assembly's own skills
-carry Python and bash), so it is "mostly inert," not "always." The install-count /
-stars floor is a reasonable line; no lockfile/vendor/security-auditor apparatus is
-needed for the wedge.
+than installing a package. The single honest caveat: skills *can* ship scripts/hooks
+(Assembly's own skills carry Python and bash), so it is "mostly inert," not "always."
+The reputation floor `find-skills` prescribes — install count, source reputation,
+GitHub stars, checked *before* install — is a reasonable line, but note it is a step
+`assemble` must actively run (see wedge step 2), not an automatic gate the registry
+applies for us. No lockfile/vendor/security-auditor apparatus is needed for the
+wedge; the verification step is.
 
 ## Alternatives Considered
 
@@ -114,7 +120,8 @@ later.
 
 - Ceremony: an assembly step that adds friction without earning capability.
 - Stale `AGENTS.md` capability list drifting from what is actually installed.
-- Over-installing low-signal skills; rely on the `find-skills` reputation gate.
+- Over-installing low-signal skills; `assemble` must run the `find-skills`
+  reputation check (installs, source, stars) before each install, not after.
 - Lifecycle placement guessed wrong — over-committing to one trigger before use
   shows where it belongs.
 
