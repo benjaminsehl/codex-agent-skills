@@ -50,51 +50,54 @@ into `init`.
   `.github/workflows/validate.yml`.
 - **Depends on:** none.
 
-### T2 — `assemble` skill body + surface registration (13 → 14)
-- **Acceptance:** `skills/assemble/SKILL.md` (≤120 lines, no `## Underlying skills`)
-  implements detect → confirm → `npx skills find` → verify reputation (install
-  count / source / stars) → auto-install verified via `npx skills add` → report;
-  below-bar matches listed, never auto-installed. The 14-skill surface passes all
-  validators, and every doc that enumerates the surface lists `assemble`.
+### T2 — `assemble` skill (full behavior incl. persistence) + surface registration (13 → 14)
+
+> **Sequencing (review #17, comment #4):** the moment
+> `plugins/assembly/skills/assemble/SKILL.md` exists it must be in the
+> `validate_skill_graph.py` allowlist or CI fails ("unexpected triggerable
+> skills") — Assembly has no "private skill" state. So the green slice that
+> exposes `assemble` must already persist; persistence is folded into this task,
+> not deferred to a later one. The first public version is spec-complete.
+
+- **Acceptance:** `plugins/assembly/skills/assemble/SKILL.md` (≤120 lines, no
+  `## Underlying skills`) implements detect → confirm → `npx skills find` → verify
+  reputation (install count / source / stars) → auto-install verified via
+  `npx skills add` → report → **persist to both the `AGENTS.md` "Capabilities"
+  section and the `assembly-status/v1` `capabilities:` list**, reconciling (no
+  duplicates, founder-authored entries preserved). Below-bar matches listed, never
+  auto-installed. The 14-skill surface passes all validators, and every
+  surface-enumerating doc lists `assemble`.
 - **Verify:** `validate_skill_graph.py`, `audit_skill_conflicts.py`,
-  `validate_plugin.py` all green; grep shows `assemble` in the surface docs.
-- **Files:** `skills/assemble/SKILL.md` (new), `validate_skill_graph.py`
-  (`SKILL_REFERENCES`), `audit_skill_conflicts.py`, `README.md` (skill table),
-  `plugins/assembly/skills/README.md`, `plugins/assembly/docs/SPEC.md`,
-  `plugins/assembly/docs/COMMAND_CONTRACT.md`, `plugins/assembly/docs/INSTALL.md`,
-  `docs/specs/assembly-1-0.md` (candidate set 13 → 14).
+  `validate_plugin.py`, `validate_status.py` all green; a documented dry-run shows
+  reconcile (no duplicates, founder entry preserved); grep shows `assemble` across
+  the surface docs.
+- **Files:**
+  - `plugins/assembly/skills/assemble/SKILL.md` (new)
+  - `plugins/assembly/scripts/validate_skill_graph.py` (`SKILL_REFERENCES` allowlist)
+  - `plugins/assembly/scripts/audit_skill_conflicts.py`
+  - `plugins/assembly/templates/AGENTS.md` (Capabilities section) + `plugins/assembly/scripts/scaffold_project.py` (seed it)
+  - `docs/status.md` (`capabilities: []` in the block); optionally `plugins/assembly/scripts/validate_status.py` (shape-check the field)
+  - surface docs: `README.md`, `plugins/assembly/skills/README.md`, `plugins/assembly/docs/SPEC.md`, `plugins/assembly/docs/COMMAND_CONTRACT.md`, `plugins/assembly/docs/INSTALL.md`, `docs/specs/assembly-1-0.md` (candidate set 13 → 14)
 - **Depends on:** T1.
 
-> **Checkpoint A:** the surface accepts a 14th skill and CI is green; `assemble`
-> can detect a stack, find, verify, and install — but does not yet persist.
+> **Checkpoint A:** `assemble` is public *and spec-complete* — detect → find →
+> verify → install → persist to both surfaces — with CI green. No half-exposed
+> workflow that installs without recording.
 
-### T3 — Persistence (AGENTS.md "Capabilities" + status-block `capabilities`)
-- **Acceptance:** `assemble` writes/reconciles an `AGENTS.md` "Capabilities"
-  section (one entry per skill: name, source, reputation, why), preserving
-  founder-authored entries; and a `capabilities:` list in the `assembly-status/v1`
-  block. Re-running reconciles instead of duplicating. `templates/AGENTS.md` gains
-  the section; scaffold seeds an empty one.
-- **Verify:** `validate_status.py` green with a sample `capabilities` entry present;
-  a documented dry-run shows reconcile (no duplicates, founder entry preserved).
-- **Files:** `skills/assemble/SKILL.md` (persistence + reconcile rules),
-  `plugins/assembly/templates/AGENTS.md`, `plugins/assembly/scripts/scaffold_project.py`
-  (seed section), `docs/status.md` (add `capabilities: []` to the block),
-  optionally `validate_status.py` (shape-check the field).
-- **Depends on:** T2.
-
-### T4 — `init` integration
+### T3 — `init` integration
 - **Acceptance:** `init` invokes `assemble` after scaffold when `detect_stack.py`
   finds a stack, or recommends it as the next step when the stack is unclear.
-- **Verify:** `validate_skill_graph.py` green (init still thin); `init` SKILL.md
-  references `assemble`; SMOKE_TESTS note describes the init → assemble handoff.
-- **Files:** `skills/init/SKILL.md`, `plugins/assembly/docs/SMOKE_TESTS.md`.
-- **Depends on:** T2, T3.
+- **Verify:** `validate_skill_graph.py` green (init still thin);
+  `plugins/assembly/skills/init/SKILL.md` references `assemble`; SMOKE_TESTS note
+  describes the init → assemble handoff.
+- **Files:** `plugins/assembly/skills/init/SKILL.md`, `plugins/assembly/docs/SMOKE_TESTS.md`.
+- **Depends on:** T2.
 
 > **Checkpoint B:** end-to-end — scaffold a Cloudflare-style fixture, `init` hands
 > to `assemble`, which detects, confirms, installs verified skills, and records
 > them in both surfaces.
 
-### T5 — Boundaries, failure modes, smoke evidence
+### T4 — Boundaries, failure modes, smoke evidence
 - **Acceptance:** the skill encodes always/ask-first/never from the spec (verify
   before install; ask-first when a below-bar skill ships scripts/hooks; never
   install unverified or overwrite founder entries) and fails clearly when
@@ -102,10 +105,10 @@ into `init`.
   run end to end.
 - **Verify:** full validator suite green; `python3 -m py_compile` on all scripts;
   SMOKE_TESTS run recorded.
-- **Files:** `skills/assemble/SKILL.md`, `plugins/assembly/docs/SMOKE_TESTS.md`,
+- **Files:** `plugins/assembly/skills/assemble/SKILL.md`, `plugins/assembly/docs/SMOKE_TESTS.md`,
   `plugins/assembly/references/agent-operating-protocol.md` (if a floor line is
   needed).
-- **Depends on:** T2–T4.
+- **Depends on:** T2–T3.
 
 ## Open questions carried from spec (resolve during build)
 
@@ -122,6 +125,8 @@ machinery; lockfile/vendor apparatus; runtimes beyond Codex and Claude Code.
 
 ## Note on size
 
-Five tasks with two checkpoints — at the planning threshold, not over it. Each is a
-focused session. Say the word if you want T2 split (skill body vs surface
-registration) for finer-grained review.
+Four tasks with two checkpoints. T2 is deliberately the largest: per review #17
+(comment #4), exposing `assemble` publicly and persisting its results must ship in
+the same green slice, since Assembly has no "private skill" state. T2 can be
+delivered as stacked commits, but it lands as one CI-green unit so no half-exposed
+workflow is ever merged.

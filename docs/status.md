@@ -1,6 +1,6 @@
 # Project Status: Assembly
 
-Last updated: 2026-06-01
+Last updated: 2026-06-04
 Current phase: proposal
 Traffic state: pre-live
 
@@ -12,12 +12,12 @@ Traffic state: pre-live
 schema: assembly-status/v1
 project: assembly
 phase: proposal
-current_gate: stage-0-foundation
+current_gate: founder-prioritization-capability-assembly-vs-stage-0
 next_skill: build
 traffic_state: pre-live
 blocked: false
-needs_founder_input: false
-last_verified: 2026-06-01
+needs_founder_input: true
+last_verified: 2026-06-04
 autonomy:
   product_decisions: founder      # always escalate, in product-implication language
   engineering_decisions: agent    # autonomous, validated by reviewer sub-agents
@@ -86,8 +86,8 @@ capability acquisition** — distinct from the four measurement loops of the 10x
 roadmap; recorded as its own thread, not yet specced.
 
 - Brief: `docs/product/discovery-capability-assembly.md`
-- Spec: `docs/specs/capability-assembly.md` (accepted; merged via PR #15).
-- Plan: `tasks/plan.md` (draft for review) — 5 dependency-ordered tasks + 2 checkpoints (stack detection → `assemble` skill + surface 13→14 → persistence → `init` integration → boundaries/smoke). Stage 0's status block resolves the prior dependency. Next gate: founder accepts the plan, then `build` T1.
+- Spec: `docs/specs/capability-assembly.md` (accepted 2026-06-04; merged via PR #15).
+- Plan: `tasks/plan.md` (PR #17) — 4 dependency-ordered tasks + 2 checkpoints (stack detection → `assemble` skill incl. persistence + surface 13→14 → `init` integration → boundaries/smoke). Stage 0's status block (PR #14) resolved the prior persistence dependency. **Founder decision pending** (see Next Concrete Action): accept the plan and choose whether this or finishing Stage 0's eval-harness is the next build slice.
 
 ## Current 1.0 Direction
 
@@ -107,10 +107,16 @@ roadmap; recorded as its own thread, not yet specced.
 
 ## Next Concrete Action
 
-Stage 0 of `docs/plans/2026-06-01-assembly-10x-roadmap.md` is in progress. This
-slice adds CI (`.github/workflows/validate.yml`) running the validators on every
-PR, the machine-readable status block above, and `validate_status.py` to keep it
-honest. Remaining Stage 0 slice: the eval-harness skeleton (a runner, the rubric
-file format, and 1–2 fixtures). The earlier 1.0 release-plan work
+Two open threads; which is the next build slice is a founder prioritization call
+(`needs_founder_input: true` above):
+
+1. **Capability assembly** — accept `tasks/plan.md` (PR #17), then `build` T1
+   (stack detection: `detect_stack.py` + signal reference).
+2. **Stage 0 eval harness** — the remaining Stage 0 slice of
+   `docs/plans/2026-06-01-assembly-10x-roadmap.md`: an eval-harness skeleton (a
+   runner, the rubric file format, and 1–2 fixtures). Stage 0's other pieces (CI,
+   the machine-readable status block, `validate_status.py`) shipped in PR #14.
+
+The earlier 1.0 release-plan work
 (`docs/plans/2026-05-27-assembly-1-0-release-plan.md`) is not abandoned but is no
 longer a blocking gate — pursue whatever is most important at the moment.

@@ -1,7 +1,7 @@
 # Spec: Capability Assembly (`assemble`)
 
-Last updated: 2026-06-02
-Status: draft for review
+Last updated: 2026-06-04
+Status: accepted (founder, 2026-06-04); planned in `tasks/plan.md` (PR #17)
 Signal density: lightweight (fresh discovery in `docs/product/discovery-capability-assembly.md`), extended with behavior requirements and boundaries because it introduces a new public skill.
 Discovery: `docs/product/discovery-capability-assembly.md`
 
@@ -143,8 +143,8 @@ A new public skill `assemble` that:
 
 ## Recommended Next Step
 
-`plan` — break `assemble` into dependency-ordered slices (stack detection →
-discovery + verification → install + report → AGENTS.md persistence → `init`
-integration → status-block persistence behind the Stage 0 dependency → surface/validator
-updates for 13 → 14). Stop here at the founder review gate; do not auto-continue
-into planning.
+Done: planned in `tasks/plan.md` (PR #17) as four dependency-ordered tasks
+(stack detection → `assemble` skill incl. persistence + surface registration →
+`init` integration → boundaries/smoke). Stage 0 (PR #14) shipped the
+machine-readable status block, so the status-block persistence is no longer a
+deferred dependency. Next: `build` T1 once the founder picks the next slice.
