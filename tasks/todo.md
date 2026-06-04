@@ -30,8 +30,8 @@
 ## Capability Assembly (`assemble`) — plan: `tasks/plan.md`
 
 - [ ] T1: Stack detection (`detect_stack.py` + signal reference)
-- [ ] T2: `assemble` skill (full behavior incl. persistence) + surface registration (13 → 14)
-- [ ] Checkpoint A: public assemble is spec-complete (detect→find→verify→install→persist both surfaces), CI green
-- [ ] T3: `init` integration
-- [ ] Checkpoint B: end-to-end scaffold → init → assemble → recorded in both surfaces
+- [ ] T2: Shared capability-acquisition behavior + persistence (AGENTS.md + status block); surface stays 13
+- [ ] Checkpoint A: behavior spec-complete (detect→find→verify→install→persist), surface unchanged
+- [ ] T3: Call-site wiring (`init` seed, `build` task-scoped trigger, `project-status` re-run)
+- [ ] Checkpoint B: end-to-end scaffold → init/build/project-status → recorded in both surfaces
 - [ ] T4: Boundaries, failure modes, smoke evidence

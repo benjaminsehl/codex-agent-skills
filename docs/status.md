@@ -12,11 +12,11 @@ Traffic state: pre-live
 schema: assembly-status/v1
 project: assembly
 phase: proposal
-current_gate: founder-prioritization-capability-assembly-vs-stage-0
+current_gate: capability-assembly-build-t1
 next_skill: build
 traffic_state: pre-live
 blocked: false
-needs_founder_input: true
+needs_founder_input: false
 last_verified: 2026-06-04
 autonomy:
   product_decisions: founder      # always escalate, in product-implication language
@@ -86,8 +86,9 @@ capability acquisition** — distinct from the four measurement loops of the 10x
 roadmap; recorded as its own thread, not yet specced.
 
 - Brief: `docs/product/discovery-capability-assembly.md`
-- Spec: `docs/specs/capability-assembly.md` (accepted 2026-06-04; merged via PR #15).
-- Plan: `tasks/plan.md` (PR #17) — 4 dependency-ordered tasks + 2 checkpoints (stack detection → `assemble` skill incl. persistence + surface 13→14 → `init` integration → boundaries/smoke). Stage 0's status block (PR #14) resolved the prior persistence dependency. **Founder decision pending** (see Next Concrete Action): accept the plan and choose whether this or finishing Stage 0's eval-harness is the next build slice.
+- Spec: `docs/specs/capability-assembly.md` (accepted; design revised 2026-06-04 after a design tournament).
+- Design (decided 2026-06-04): a **shared capability-acquisition behavior**, not a new skill — `init` seeds it, `build` fires it just-in-time (task-scoped), `project-status` re-runs it. Public surface stays at 13. A 5-approach tournament found the original 14th-skill design was a strong #2 that paid an avoidable surface tax; the founder adopted the hybrid.
+- Plan: `tasks/plan.md` (PR #17) — 4 dependency-ordered tasks + 2 checkpoints (stack detection → shared behavior + persistence → call-site wiring → boundaries/smoke). Smaller than the pre-tournament plan (no surface registration). Next: `build` T1.
 
 ## Current 1.0 Direction
 
@@ -107,16 +108,13 @@ roadmap; recorded as its own thread, not yet specced.
 
 ## Next Concrete Action
 
-Two open threads; which is the next build slice is a founder prioritization call
-(`needs_founder_input: true` above):
+Capability-assembly design is settled (hybrid behavior, see thread above). Next is
+`build` T1 of `tasks/plan.md`: stack detection (`detect_stack.py` + signal
+reference), once PR #17 (the revised plan) is reviewed/merged or the founder says
+go.
 
-1. **Capability assembly** — accept `tasks/plan.md` (PR #17), then `build` T1
-   (stack detection: `detect_stack.py` + signal reference).
-2. **Stage 0 eval harness** — the remaining Stage 0 slice of
-   `docs/plans/2026-06-01-assembly-10x-roadmap.md`: an eval-harness skeleton (a
-   runner, the rubric file format, and 1–2 fixtures). Stage 0's other pieces (CI,
-   the machine-readable status block, `validate_status.py`) shipped in PR #14.
-
-The earlier 1.0 release-plan work
-(`docs/plans/2026-05-27-assembly-1-0-release-plan.md`) is not abandoned but is no
-longer a blocking gate — pursue whatever is most important at the moment.
+Parallel open item, not blocking: the remaining **Stage 0 eval-harness** slice of
+`docs/plans/2026-06-01-assembly-10x-roadmap.md` (a runner, the rubric file format,
+1–2 fixtures); Stage 0's other pieces shipped in PR #14. The earlier 1.0
+release-plan work is not abandoned but is no longer a blocking gate — pursue
+whatever is most important at the moment.
