@@ -52,12 +52,12 @@ escalation_floor:                 # never autonomous, in any traffic state
 - Structure decision: agent-only operating files now belong under `.agents/`, with root `AGENTS.md` as the visible entrypoint and `reference/` reserved for raw source material.
 - Product decision: 1.0 ships as a dual-runtime plugin (Codex + Claude Code) from the same bundle and must pass install/smoke checks in both runtimes; post-1.0 orchestration is the next strategic direction. See `docs/decisions/2026-05-27-dual-runtime-claude-code.md`.
 - Product-intent completeness: what is being built, why it matters, and what good looks like are now explicit in the spec and north-star docs.
-- Next gate: founder review/acceptance of `docs/specs/assembly-1-0.md`, then `plan` for release-candidate implementation and proof tasks.
+- Next gate: the immediate active gate is `build` T1 of the capability-assembly plan (`tasks/plan.md`, PR #17), matching `current_gate` in the block above. Older parallel items remain open but non-blocking: founder review/acceptance of `docs/specs/assembly-1-0.md`, and the remaining Stage 0 eval-harness slice.
 
 ## Next Recommended Skills
 
-- `plan` (break Stage 0 of the 10x roadmap into slices)
-- `build`
+- `build` (capability assembly T1: stack detection — `detect_stack.py` + signal reference)
+- `build`/`plan` for the remaining Stage 0 eval-harness slice (parallel, non-blocking)
 
 ## 10x Direction (accepted 2026-06-01)
 

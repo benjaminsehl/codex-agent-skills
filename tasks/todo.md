@@ -27,7 +27,7 @@
 - [x] Task 25: Add user skill conflict guidance and audit script
 - [x] Task 26: Add `next` as the contextual continuation entry skill
 
-## Capability Assembly (`assemble`) — plan: `tasks/plan.md`
+## Capability Assembly (shared behavior) — plan: `tasks/plan.md`
 
 - [ ] T1: Stack detection (`detect_stack.py` + signal reference)
 - [ ] T2: Shared capability-acquisition behavior + persistence (AGENTS.md + status block); surface stays 13
