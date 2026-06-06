@@ -6,10 +6,10 @@ This repo builds the reusable plugin for phase-aware product development. The sa
 
 Before choosing work, read:
 
-- `docs/status.md` for the current Assembly project phase, next gate, and active 1.0 questions
+- `.agents/status.md` for the current Assembly project phase, next gate, and active 1.0 questions
 - `.agents/AGENT-GUIDANCE.md` for the project copy of the operating protocol
 - `docs/product/discovery-1-0.md` for the current product-discovery brief
-- `docs/phases/proposal.md` for what 1.0 is meant to prove
+- `.agents/phases/proposal.md` for what 1.0 is meant to prove
 
 Before changing the plugin, inspect:
 
@@ -34,7 +34,7 @@ When working on this repo, follow the same protocol the plugin teaches:
 
 - Keep entry skills thin.
 - Put detailed guidance in `references/` or `templates/`.
-- Keep agent-only project state in `.agents/`; keep product/project reasoning in `docs/`.
+- Keep the operational trail the agent uses to do and resume work in `.agents/` (status, phases, specs, plans, research, QA, release, evals); keep documents written to help a human understand the product and the code in `docs/` (product, decisions, tech-design).
 - Do not overwrite downstream `AGENTS.md` files in scaffold behavior.
 - Keep validators current when adding required files.
 
@@ -57,7 +57,7 @@ CI (`.github/workflows/validate.yml`) runs these on every PR and on `main`.
 
 Domain skills assembled for Assembly's own stack via the capability-acquisition
 behavior (`plugins/assembly/references/capability-acquisition.md`); mirror of the
-`capabilities:` list in `docs/status.md`. Assembly is a skills toolkit, not a
+`capabilities:` list in `.agents/status.md`. Assembly is a skills toolkit, not a
 platform app, so it has no domain skills to assemble yet.
 
 - _none yet_

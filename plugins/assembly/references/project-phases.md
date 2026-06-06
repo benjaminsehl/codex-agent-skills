@@ -111,4 +111,4 @@ When asked what phase a project is in, answer with:
 - Next recommended skills.
 - One concrete next action.
 
-If this cannot be answered with confidence, use `project-status` repair mode for a deeper audit, `docs/status.md` repair, and recovery plan.
+If this cannot be answered with confidence, use `project-status` repair mode for a deeper audit, `.agents/status.md` repair, and recovery plan.

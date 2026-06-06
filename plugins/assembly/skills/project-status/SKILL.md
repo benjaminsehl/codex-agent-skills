@@ -22,7 +22,7 @@ This is the gateway for status, repair, retro, and routing. For scaffolding a ne
 ## Workflow
 
 1. State that `project-status` is active and identify the repo plus project or subproject.
-2. Inspect `docs/status.md`, nearest `docs/projects/**/status.md`, phase files, product docs, decisions, specs, plans, tech design, research, prototypes, QA/release notes, `.agents/log.md`, relevant `.agents/notes/`, `reference/`, open tasks, and recent commits.
+2. Inspect `.agents/status.md`, nearest `.agents/projects/**/status.md`, phase files, product docs, decisions, specs, plans, tech design, research, prototypes, QA/release notes, `.agents/log.md`, relevant `.agents/notes/`, `reference/`, open tasks, and recent commits.
 3. If project docs are missing and the founder is starting or restarting work, recommend `init` and stop here; do not run the scaffold script from this skill.
 4. Classify the phase:
    - Proposal: outcomes, assumptions, principles, or success criteria are not aligned.
@@ -30,7 +30,7 @@ This is the gateway for status, repair, retro, and routing. For scaffolding a ne
    - Build: approved direction exists and implementation slices are active.
    - Release: built work needs QA, polish, ship decision, and follow-up capture.
 5. Apply Chesterton's fence: name the decision, principle, or historical artifact that explains the current shape before recommending replacement.
-6. If phase, status, or recovery path is unclear, run repair mode: audit conformance, update `docs/status.md` when project-doc edits are in scope, and produce a recovery plan.
+6. If phase, status, or recovery path is unclear, run repair mode: audit conformance, update `.agents/status.md` when project-doc edits are in scope, and produce a recovery plan.
 7. If multiple active slices exist, present 2-3 candidates with evidence and ask the founder to pick. Use the explicit options-list pattern — do not pick arbitrarily.
 8. Output:
    - Current phase with evidence.
@@ -48,7 +48,7 @@ This is the gateway for status, repair, retro, and routing. For scaffolding a ne
 - Missing artifacts are separated from optional polish.
 - Skipped gates and their risks are named when the founder asks to move ahead anyway.
 - Recommended skills match the current phase and blockers.
-- `docs/status.md` is updated when project-doc edits are in scope, or the reason for not updating it is stated.
+- `.agents/status.md` is updated when project-doc edits are in scope, or the reason for not updating it is stated.
 - What/why/good gaps are named instead of hidden inside a confident next step.
 - Multiple-slice ambiguity produces a 2-3-option pick list, not an arbitrary choice.
 - The founder can resume with one clear next action.

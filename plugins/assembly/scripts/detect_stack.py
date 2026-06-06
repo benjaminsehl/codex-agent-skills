@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Detect a project's stack from repo signals.
 
-Capability assembly (see docs/specs/capability-assembly.md) needs to know a
+Capability assembly (see .agents/specs/capability-assembly.md) needs to know a
 project's stack before it can search skills.sh for the right domain skills. This
 script is the deterministic, testable seam: given a repo root, it reports the
 stack(s) it can infer and the concrete signals that matched, as JSON. The

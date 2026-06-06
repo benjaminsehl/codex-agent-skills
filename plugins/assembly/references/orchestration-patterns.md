@@ -311,7 +311,7 @@ Reach for Agent Teams only when teammates **need** to challenge each other to pr
 
 ## Dynamic Workflows (script-held orchestration at scale)
 
-A **dynamic workflow** is a JavaScript script that orchestrates subagents at scale (dozens to hundreds), written by Claude for the task and run by a runtime in the background while the session stays responsive. Research preview; requires a recent Claude Code. See `docs/research/2026-06-02-compound-engineering-and-dynamic-workflows.md`.
+A **dynamic workflow** is a JavaScript script that orchestrates subagents at scale (dozens to hundreds), written by Claude for the task and run by a runtime in the background while the session stays responsive. Research preview; requires a recent Claude Code. See `.agents/research/2026-06-02-compound-engineering-and-dynamic-workflows.md`.
 
 The defining difference from the patterns above: **the plan lives in the script**, not in Claude's context. The script holds the loop, branching, and intermediate results; Claude's context only receives the final answer. That makes the orchestration itself repeatable and lets it scale past what one conversation can coordinate. A workflow can also choose per-agent models and worktree isolation, and is resumable within the session.
 

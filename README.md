@@ -88,20 +88,20 @@ On Claude Code (not Codex), Assembly ships two additive surfaces beyond the shar
 
 - **Specialist subagents** — `code-reviewer`, `security-auditor`, and `test-engineer`, declared in `plugins/assembly/.claude-plugin/plugin.json` and defined in [`.agents/personas/`](plugins/assembly/.agents/personas/). `review` and `ship` fan out to them in parallel; each can run on a per-persona model.
 - **Hooks** ([`plugins/assembly/hooks/`](plugins/assembly/hooks/)):
-  - A **SessionStart primer** orients each session to `docs/status.md`, the current phase, and the recommended next skills — silent outside Assembly projects.
+  - A **SessionStart primer** orients each session to `.agents/status.md`, the current phase, and the recommended next skills — silent outside Assembly projects.
   - An **ask-first PreToolUse guard** re-prompts before merges, deploys, force/main/delete pushes, publishes, and destructive shell ops — the runtime counterpart to the always-ask floor, so the scaffold's maximum default permissions stay safe.
 
 ## Current 1.0 Direction
 
-- [Assembly 1.0 spec](docs/specs/assembly-1-0.md)
+- [Assembly 1.0 spec](.agents/specs/assembly-1-0.md)
 - [App-factory north star](docs/product/app-factory-north-star.md)
-- [1.0 release plan](docs/plans/2026-05-27-assembly-1-0-release-plan.md)
-- [Post-1.0 orchestrator roadmap](docs/plans/2026-05-27-post-1-0-orchestrator-roadmap.md)
-- [Agentic orchestration research](docs/research/2026-05-27-agentic-orchestration-research.md)
+- [1.0 release plan](.agents/plans/2026-05-27-assembly-1-0-release-plan.md)
+- [Post-1.0 orchestrator roadmap](.agents/plans/2026-05-27-post-1-0-orchestrator-roadmap.md)
+- [Agentic orchestration research](.agents/research/2026-05-27-agentic-orchestration-research.md)
 
 ## Project Docs Convention
 
-The root project workspace is `docs/`. Subprojects live under `docs/projects/<slug>/` and can nest recursively.
+The root project workspace splits by audience: the agent's operational trail lives under `.agents/` (status, phases, specs, plans, research, QA, release, evals) and human documentation under `docs/` (product, decisions, tech-design). Subprojects nest identically under `projects/<slug>/` in both trees and can recurse.
 
 ```text
 my-app/
@@ -110,22 +110,24 @@ my-app/
 |   `-- settings.json
 |-- .codex/
 |   `-- config.toml
-|-- .agents/
+|-- .agents/              # agent operational trail
 |   |-- AGENT-GUIDANCE.md
 |   |-- log.md
-|   `-- notes/
-|-- docs/
+|   |-- notes/
 |   |-- status.md
 |   |-- phases/
-|   |-- product/
-|   |-- decisions/
-|   |-- tech-design/
-|   |-- research/
 |   |-- specs/
 |   |-- plans/
 |   |-- prototypes/
+|   |-- research/
 |   |-- qa/
 |   |-- release/
+|   `-- projects/
+|-- docs/                 # human documentation
+|   |-- README.md
+|   |-- product/
+|   |-- decisions/
+|   |-- tech-design/
 |   `-- projects/
 |-- reference/
 `-- src/
@@ -133,17 +135,16 @@ my-app/
 
 Why this shape:
 
-- Agent-only operating material is tucked under `.agents/`, with `AGENTS.md` kept as the top-level entrypoint.
-- Instruction-like project files use uppercase names, such as `AGENT-GUIDANCE.md`; records like `log.md` and `notes/` stay lowercase.
-- Agents get one obvious place to start: `docs/status.md`.
-- Project reasoning is centralized instead of scattered across package folders.
-- Subprojects still get their own paper trail.
+- Markdown is split by audience: the operational trail the agent uses to do and resume work lives in `.agents/`; documents that help a human understand the product and the code live in `docs/`.
+- `AGENTS.md` stays the top-level entrypoint; instruction-like files use uppercase names (`AGENT-GUIDANCE.md`) and records like `log.md` and `notes/` stay lowercase.
+- Agents get one obvious place to start: `.agents/status.md`.
+- Subprojects nest identically under `projects/<slug>/` in both trees.
 - Chesterton's fence is visible before important decisions are changed.
 
 ## How Agents Should Work Through A Project
 
 1. Use `next` when the user asks to continue through the normal process.
-2. Read `docs/status.md` and nearest subproject status.
+2. Read `.agents/status.md` and nearest subproject status.
 3. Use `project-status` when the phase, scaffold, repair path, or next skill is not obvious.
 4. Use `product-discovery` when product direction, user love, or business viability is unclear.
 5. Choose the matching lifecycle skill for the current phase.
@@ -156,7 +157,7 @@ Why this shape:
 Assembly decides what to escalate on two axes, not on phase ceremony:
 
 - **Decision type.** Product and UX decisions — what gets built and why, user-facing behavior, copy, flow, scope cuts that change the experience, naming, pricing — always go to the founder in product-implication language. Engineering decisions run autonomously and are validated by reviewer sub-agents (`code-reviewer`, `security-auditor`, `test-engineer`), not by founder approval. Whether to open a draft PR, promote it to ready, or merge an engineering-only change is an engineering call, not an interruption.
-- **Traffic state.** `docs/status.md` carries a founder-set `Traffic state:` field (default `pre-live`). When `pre-live`, the agent runs the whole roadmap — multiple PRs, merges, and deploys — with no per-action check-in, as long as no product/UX decision is open. When `live`, opening PRs and review stay autonomous and merging to the default branch becomes a founder GO/NO-GO; deploy then follows the approved merge. (A release branch can later move this gate; until then, merge to the default branch is the live gate.)
+- **Traffic state.** `.agents/status.md` carries a founder-set `Traffic state:` field (default `pre-live`). When `pre-live`, the agent runs the whole roadmap — multiple PRs, merges, and deploys — with no per-action check-in, as long as no product/UX decision is open. When `live`, opening PRs and review stay autonomous and merging to the default branch becomes a founder GO/NO-GO; deploy then follows the approved merge. (A release branch can later move this gate; until then, merge to the default branch is the live gate.)
 
 The **always-ask floor** holds in any traffic state: money movement, credential use, external messaging, privacy-sensitive data, irreversible destructive operations, and merging to the default branch when live.
 

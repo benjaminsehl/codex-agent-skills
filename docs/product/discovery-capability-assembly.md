@@ -82,7 +82,7 @@ becomes a durable property of the project, the same way the lifecycle already is
 ## Relationship To The 10x Roadmap
 
 This is a **new axis — capability acquisition** — distinct from the four
-measurement loops in `docs/plans/2026-06-01-assembly-10x-roadmap.md` (output
+measurement loops in `.agents/plans/2026-06-01-assembly-10x-roadmap.md` (output
 quality, vision alignment, code coherence, autonomous ops). Those loops make the
 agent's work *measurably better*; this makes the agent *more domain-capable per
 project*. Record it as its own thread so it is not mis-sequenced into the eval

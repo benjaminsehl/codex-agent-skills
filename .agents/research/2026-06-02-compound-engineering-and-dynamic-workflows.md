@@ -2,7 +2,7 @@
 
 Last updated: 2026-06-02
 Status: research synthesis (founder-shared references)
-Informs: the measurement-first 10x roadmap (`docs/plans/2026-06-01-assembly-10x-roadmap.md`)
+Informs: the measurement-first 10x roadmap (`.agents/plans/2026-06-01-assembly-10x-roadmap.md`)
 
 Two founder-shared references, and how they sharpen Assembly:
 
@@ -64,4 +64,4 @@ Most routine coding tasks do not need a workflow — they cost meaningfully more
 ## Recommended folds (made in this PR)
 
 - `orchestration-patterns.md`: a Dynamic Workflows section (the six patterns, when-to-use vs subagents/skills/agent-teams, the failure modes, skill-distribution).
-- `docs/plans/2026-06-01-assembly-10x-roadmap.md`: per-cycle `compound` step into Stage 1 + lessons index; dynamic workflows as the substrate for the Stage 2 eval runner and Stage 4; failure-modes framing.
+- `.agents/plans/2026-06-01-assembly-10x-roadmap.md`: per-cycle `compound` step into Stage 1 + lessons index; dynamic workflows as the substrate for the Stage 2 eval runner and Stage 4; failure-modes framing.

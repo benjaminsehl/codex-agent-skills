@@ -1,7 +1,7 @@
 # Stack Detection Signals
 
 `scripts/detect_stack.py` infers a project's stack from repo signals so the
-capability-acquisition behavior (see `docs/specs/capability-assembly.md`) can
+capability-acquisition behavior (see `.agents/specs/capability-assembly.md`) can
 search skills.sh for the right domain skills. This file documents the seed signal
 set and how to extend it. The script's `STACK_SIGNALS` table is the source of
 truth; keep this doc in sync when you add a stack.

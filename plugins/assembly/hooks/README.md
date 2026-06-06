@@ -18,14 +18,14 @@ never modify files and never block a tool call on a missing dependency.
 ## SessionStart primer — `session-start.sh`
 
 Runs when a session starts or resumes. If the working directory is an Assembly
-project (it has `docs/status.md`), it injects a short orientation into the
-session: read `docs/status.md` first, the current phase, the skills `status.md`
+project (it has `.agents/status.md`), it injects a short orientation into the
+session: read `.agents/status.md` first, the current phase, the skills `status.md`
 recommends next, the lifecycle spine, and the ask-first floor. If there is no
-`docs/status.md`, it emits nothing and exits 0, so non-Assembly projects are
+`.agents/status.md`, it emits nothing and exits 0, so non-Assembly projects are
 unaffected.
 
 This operationalizes the project convention that *agents get one obvious place to
-start: `docs/status.md`* — instead of relying on the user to remember to invoke a
+start: `.agents/status.md`* — instead of relying on the user to remember to invoke a
 skill at the top of every session.
 
 ## Ask-first guard — `ask-first-guard.sh`

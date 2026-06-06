@@ -61,20 +61,20 @@ Assembly 1.0 includes:
   - `.agents/log.md`
   - `.agents/notes/`
   - `docs/`
-  - `docs/status.md`
-  - `docs/phases/`
+  - `.agents/status.md`
+  - `.agents/phases/`
   - `docs/product/`
   - `docs/decisions/`
-  - `docs/specs/`
-  - `docs/plans/`
+  - `.agents/specs/`
+  - `.agents/plans/`
   - `docs/tech-design/`
-  - `docs/research/`
-  - `docs/prototypes/`
-  - `docs/qa/`
-  - `docs/release/`
-  - `docs/projects/`
+  - `.agents/research/`
+  - `.agents/prototypes/`
+  - `.agents/qa/`
+  - `.agents/release/`
+  - `.agents/projects/`
   - `reference/`
-- Subproject scaffolding under `docs/projects/<slug>/`.
+- Subproject scaffolding under `.agents/projects/<slug>/`.
 - A black composer icon and plugin metadata that render cleanly in both Codex and Claude Code.
 - Validation scripts for plugin shape, skill graph, local skill conflicts, and scaffold behavior.
 - User docs for install, upgrade, migration from old lifecycle skills, and everyday workflow.
@@ -91,7 +91,7 @@ Assembly 1.0 includes:
 Assembly's gating turns on two axes, not on phase ceremony. The founder's attention is reserved for product/UX decisions and, once there is live traffic, the merge-to-default-branch gate. Everything else the agent decides autonomously and validates with reviewer sub-agents.
 
 - Axis 1 — decision type: product/UX decisions always escalate to the founder in product-implication language; engineering decisions run autonomously, validated by reviewer sub-agents rather than founder approval.
-- Axis 2 — traffic state (`docs/status.md` `Traffic state:` field, founder-set, default `pre-live`): `pre-live` means full autonomy through the roadmap — open PRs (draft or ready, agent's call), run reviewer sub-agents, merge, and deploy — with no per-action approval, as long as no product/UX decision is open and no always-ask floor item is involved. `live` keeps opening, reviewing, and readying PRs autonomous and makes merging to the default branch a founder GO/NO-GO, with deploy following the approved merge.
+- Axis 2 — traffic state (`.agents/status.md` `Traffic state:` field, founder-set, default `pre-live`): `pre-live` means full autonomy through the roadmap — open PRs (draft or ready, agent's call), run reviewer sub-agents, merge, and deploy — with no per-action approval, as long as no product/UX decision is open and no always-ask floor item is involved. `live` keeps opening, reviewing, and readying PRs autonomous and makes merging to the default branch a founder GO/NO-GO, with deploy following the approved merge.
 
 ### Product gates (must be clear before the rails open)
 
@@ -137,7 +137,7 @@ These actions require explicit founder approval regardless of traffic state or p
 
 `next` must:
 
-- Read `AGENTS.md`, `docs/status.md`, nearest subproject status, `.agents/log.md`, and referenced specs/plans when present.
+- Read `AGENTS.md`, `.agents/status.md`, nearest subproject status, `.agents/log.md`, and referenced specs/plans when present.
 - Identify the active phase: proposal, prototype, build, or release.
 - Repair stale or missing status before proceeding when project-doc edits are in scope.
 - Check whether the project trail answers the product gates (what / why / what good looks like / risks / rollback) before dispatching into planning, building, or release work.
@@ -155,7 +155,7 @@ These actions require explicit founder approval regardless of traffic state or p
 - Preserve existing `.agents/AGENT-GUIDANCE.md`, `.agents/notes/README.md`, and `reference/README.md` under force scaffolding.
 - Append to `.agents/log.md` instead of rewriting history.
 - Diagnose current phase, missing prerequisites, skipped gates, and next recommended skills.
-- Update `docs/status.md` when repair is in scope.
+- Update `.agents/status.md` when repair is in scope.
 
 ### `product-discovery`
 
@@ -324,7 +324,7 @@ git diff --check
 Scaffold smoke tests:
 
 - Root project scaffold creates the expected `docs/`, `.agents/`, and `reference/` shape.
-- Subproject scaffold creates nested project docs under `docs/projects/<slug>/`.
+- Subproject scaffold creates nested project docs under `.agents/projects/<slug>/`.
 - Existing `AGENTS.md` is skipped and reported.
 - Force scaffolding preserves protected guidance files and appends to `.agents/log.md`.
 

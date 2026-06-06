@@ -19,7 +19,7 @@ Implement the next planned task. Build is a router, not a dispatcher: it execute
 ## Workflow
 
 1. State that the `build` workflow is active. If no target task was provided, say you are inferring the next implementable task from the project trail.
-2. Orient from `AGENTS.md`, `docs/status.md`, relevant `docs/specs/`, `docs/plans/`, task files, current branch, and git status. Use the nearest project or subproject trail.
+2. Orient from `AGENTS.md`, `.agents/status.md`, relevant `.agents/specs/`, `.agents/plans/`, task files, current branch, and git status. Use the nearest project or subproject trail.
 3. Check phase prerequisites in order. Route — do not execute — when a phase is missing:
    - Spec missing or stale → stop and invoke `spec` (which always runs mini-discovery first, even when invoked from build).
    - Plan missing or stale → stop and invoke `plan`.
