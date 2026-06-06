@@ -309,6 +309,59 @@ Reach for Agent Teams only when teammates **need** to challenge each other to pr
 
 ---
 
+## Dynamic Workflows (script-held orchestration at scale)
+
+A **dynamic workflow** is a JavaScript script that orchestrates subagents at scale (dozens to hundreds), written by Claude for the task and run by a runtime in the background while the session stays responsive. Research preview; requires a recent Claude Code. See `docs/research/2026-06-02-compound-engineering-and-dynamic-workflows.md`.
+
+The defining difference from the patterns above: **the plan lives in the script**, not in Claude's context. The script holds the loop, branching, and intermediate results; Claude's context only receives the final answer. That makes the orchestration itself repeatable and lets it scale past what one conversation can coordinate. A workflow can also choose per-agent models and worktree isolation, and is resumable within the session.
+
+| | Subagents | Skills | Agent teams | Dynamic workflows |
+|--|--|--|--|--|
+| Who holds the plan | Claude, per turn | Claude, per prompt | The lead agent | The script |
+| Intermediate results | Claude's context | Claude's context | Shared task list | Script variables |
+| Scale | A few per turn | A few per turn | A handful of peers | Dozens–hundreds per run |
+
+### Why it matters here: it combats the failure modes our loops guard against
+
+- **Agentic laziness** — stopping after partial progress (e.g. 35 of 50 review items) and declaring done.
+- **Self-preferential bias** — preferring its own output when asked to verify or judge it. This is exactly why agent-graded evals need a *separate* judge and why `vision-keeper` must be a distinct agent.
+- **Goal drift** — lossy compaction dropping edge-case and "don't do X" constraints over many turns.
+
+Isolated subagent contexts with focused goals structurally prevent these.
+
+### Composable sub-patterns
+
+Workflows compose these (a workflow may combine several):
+
+- **Classify-and-act** — a classifier routes to different agents/behavior; also model/intelligence routing.
+- **Fan-out-and-synthesize** — split into many steps, one agent each, with a synthesize barrier that waits and merges structured outputs.
+- **Adversarial verification** — a separate agent verifies each agent's output against a rubric.
+- **Generate-and-filter** — generate ideas, filter by rubric/verification, dedupe, return the best.
+- **Tournament** — N agents attempt the same task different ways; pairwise judging to a winner (comparative judgment beats absolute scoring — good for taste and sorting).
+- **Loop-until-done** — spawn until a stop condition (no new findings, no errors), not a fixed count.
+
+### When to reach for a workflow instead of the patterns above
+
+- The task needs more agents than one conversation can coordinate (large sweeps, migrations, hundreds of items).
+- You want the orchestration codified as a script you can read, rerun, and share.
+- The quality bar needs a repeatable adversarial/multi-angle structure, not a single pass.
+
+Natural Assembly fits: the **Stage 2 eval runner** (worktree agent per fixture + a separate grader per rubric), **course-correction ledger mining** (cluster recurring corrections, adversarially verify, distill), `ship`/`review` fan-outs, and the Stage 3 coherence/desloppification sweep.
+
+### When NOT to
+
+Most routine coding tasks do not need a workflow and cost meaningfully more tokens — "most coding tasks do not need a panel of 5 reviewers." Reserve workflows for complex, high-value, massively-parallel, or adversarial tasks. Compare against direct invocation (Pattern 1) first.
+
+### Distribution: ship a workflow inside a skill
+
+Beyond saving to `~/.claude/workflows/`, a workflow can ship **inside a skill**: put the JavaScript in the skill folder and reference it from `SKILL.md`, treating it as a *template* rather than a verbatim script. This keeps the orchestration on Assembly's skill surface. Pair repeatable workflows (triage, eval, verification) with `/loop` and a `/goal` stop condition; bound cost with a token budget.
+
+### Relationship to the rest of the catalog
+
+Dynamic workflows do not replace Patterns 1–5 — they are the next step on the scale axis. Direct invocation is still the baseline to compare against; the lifecycle stays user-driven (Pattern 4) with human checkpoints; Agent Teams remains the choice when peers must *talk to each other* mid-investigation. A workflow is the choice when one orchestrator must drive many isolated agents through a codified, rerunnable plan. It is also complementary to an external operator (Hermes): the operator decides *what* runs and escalates to the founder; a workflow executes the *scaled* step.
+
+---
+
 ## Anti-patterns
 
 ### A. Router persona ("meta-orchestrator")

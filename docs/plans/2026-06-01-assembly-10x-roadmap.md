@@ -94,9 +94,15 @@ Scoped here in full (per founder request); sequenced measurement-first below.
   tools, CI, and external operators read state instead of re-parsing prose.
 - **CI** — run the validators (and later the evals) on every PR. Coherence of
   Assembly itself should not rest on an agent remembering four python scripts.
-- **Lessons index** — turn retros into a structured index `next` and
-  `project-status` actually consult, so the system gets measurably better from
-  use instead of merely accumulating prose.
+- **Lessons index + a per-cycle `compound` step** — turn retros into a
+  structured index `next` and `project-status` actually consult, so the system
+  gets measurably better from use instead of merely accumulating prose. Borrow
+  the discipline from Every's compound-engineering loop (see
+  `docs/research/2026-06-02-compound-engineering-and-dynamic-workflows.md`):
+  capture learnings after *every* slice, not just at end-of-project retro. A
+  thin `compound` step writes any new founder correction to the ledger and any
+  reusable pattern to the lessons index. (Borrow the mechanism, not the 37-skill
+  surface — that cuts against "few entrypoints, deep references.")
 - **Portable protocol primer** — package the Assembly operating protocol (today
   split across root `AGENTS.md` and `references/agent-operating-protocol.md`) as
   one canonical, runtime-agnostic primer any agent can load: a plugin-based
@@ -129,6 +135,11 @@ the runner end to end.
   gates specs, plans, and PRs against them; fans into `review` and `ship`.
 - Backfill the ledger from existing decisions where a founder correction is
   already on record.
+- Ledger ingestion can be automated as a **dynamic workflow** (see the research
+  note): mine recent sessions and review comments for recurring corrections,
+  cluster them with parallel agents, adversarially verify each candidate ("would
+  this rule have prevented a real mistake?"), and distill survivors into ledger
+  entries. The iMessage/founder loop seeds the ledger; this workflow mines it.
 
 Exit evidence: one spec or PR is checked against the ledger and the
 `vision-keeper` either passes it or names which correction/anti-goal it trips.
@@ -140,6 +151,11 @@ Exit evidence: one spec or PR is checked against the ledger and the
 - Expand the fixture set to cover each lifecycle skill.
 - Wire eval gating into CI: a skill/persona edit runs its fixtures and must not
   regress its rubric.
+- The eval runner is a natural **dynamic workflow**: a worktree agent per
+  fixture run plus a *separate* grader agent per rubric (a distinct judge is what
+  defeats self-preferential bias), with a skeptic agent to limit false positives.
+  Ship it as a workflow inside the eval skill (JS in the skill folder, referenced
+  from `SKILL.md` as a template). See the research note.
 
 Exit evidence: a deliberate skill regression is caught by the eval gate in CI.
 
@@ -169,6 +185,13 @@ type/lint error.
   ledger/anti-goal violation, coherence drift, failed verification, or an
   approval boundary. That is what lets a low-oversight project run many PRs deep
   between founder check-ins without making Assembly runtime-specific.
+- **Dynamic workflows are the in-session scale substrate, complementary to the
+  operator.** The operator (Hermes) decides *what* runs and escalates to the
+  founder; a dynamic workflow executes the *scaled* step (large sweeps,
+  migrations, fan-out review) through a codified, rerunnable script. Its "no
+  mid-run user input — run each stage as its own workflow for sign-off"
+  constraint matches the founder-gate model exactly. See the research note and
+  `references/orchestration-patterns.md`.
 
 Exit evidence: an operator or simulated operator runs a bounded slice end to end
 from the portable protocol primer and halts on a seeded eval regression rather
