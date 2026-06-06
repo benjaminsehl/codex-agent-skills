@@ -85,6 +85,45 @@ printf '{"tool_name":"Bash","tool_input":{"command":"npm install"}}' \
 CLAUDE_PROJECT_DIR="$PWD" bash plugins/assembly/hooks/session-start.sh
 ```
 
+## Capability Assembly — Live Smoke Procedure
+
+This is the recorded end-to-end proof for capability assembly (Checkpoint B + T4
+evidence). It needs the live `npx skills` registry and network/install, so run it
+in a real environment (not the CI sandbox). Record the output in
+`.agents/qa/` and check the boxes when each step passes.
+
+```bash
+# 1. A repo with a detectable stack (Cloudflare here).
+mkdir -p /tmp/cap-smoke && cd /tmp/cap-smoke && printf "name = \"cap-smoke\"\n" > wrangler.toml
+
+# 2. Detection reports the stack.
+python3 /path/to/assembly/plugins/assembly/scripts/detect_stack.py --root .
+#   expect: {"stacks": ["cloudflare"], "signals": {"cloudflare": ["wrangler.toml"]}}
+
+# 3. Discover + VERIFY before install (the find-skills reputation gate).
+npx skills find cloudflare
+#   inspect install counts / source stars; pick a match that clears the bar
+#   (e.g. cloudflare/skills). Do NOT install an unverified or below-bar match.
+
+# 4. Install the verified match.
+npx skills add cloudflare/skills
+npx skills list   # confirm it installed
+```
+
+Then exercise the call sites and confirm persistence:
+
+- [ ] `init` on a fresh Cloudflare-style repo detects the stack, confirms it, and (after verify) installs + records the skill.
+- [ ] `build` on a slice that calls an unfamiliar Cloudflare API fires the task-scoped acquisition before improvising.
+- [ ] `project-status` after the stack grows offers the re-assemble route.
+- [ ] The `AGENTS.md` "Capabilities" section lists the installed skill (name, source, why).
+- [ ] The `.agents/status.md` `capabilities:` list has a matching entry (`name` + `source`), and `python3 plugins/assembly/scripts/validate_status.py` still passes.
+- [ ] Re-running acquisition reconciles (no duplicate entries; any hand-authored entry preserved).
+- [ ] With `npx`/Node unavailable, the behavior stops with a clear missing-dependency message rather than half-acting.
+
+Boundaries (always verify-before-install; ask-first on below-bar skills that ship
+scripts/hooks; never install unverified or overwrite founder entries) are defined
+in `plugins/assembly/references/capability-acquisition.md`.
+
 ## Manual Acceptance Checklist
 
 - [ ] Only the 13 public skills are triggerable from this plugin (capability acquisition is a shared behavior, not a 14th skill).

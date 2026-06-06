@@ -12,11 +12,11 @@ Traffic state: pre-live
 schema: assembly-status/v1
 project: assembly
 phase: proposal
-current_gate: capability-assembly-build-t4
-next_skill: build
+current_gate: capability-assembly-live-smoke
+next_skill: qa
 traffic_state: pre-live
 blocked: false
-needs_founder_input: false
+needs_founder_input: true
 last_verified: 2026-06-06
 autonomy:
   product_decisions: founder      # always escalate, in product-implication language
@@ -53,11 +53,11 @@ capabilities: []                  # domain skills assembled for the stack; see r
 - Structure decision: agent-only operating files now belong under `.agents/`, with root `AGENTS.md` as the visible entrypoint and `reference/` reserved for raw source material.
 - Product decision: 1.0 ships as a dual-runtime plugin (Codex + Claude Code) from the same bundle and must pass install/smoke checks in both runtimes; post-1.0 orchestration is the next strategic direction. See `docs/decisions/2026-05-27-dual-runtime-claude-code.md`.
 - Product-intent completeness: what is being built, why it matters, and what good looks like are now explicit in the spec and north-star docs.
-- Next gate: the immediate active gate is `build` T4 of the capability-assembly plan (`tasks/plan.md`), matching `current_gate` in the block above. T1–T3 are merged; the only remaining slice is boundaries + the recorded end-to-end smoke run (needs live `npx skills`). Older parallel items remain open but non-blocking: founder review/acceptance of `.agents/specs/assembly-1-0.md`, and the remaining Stage 0 eval-harness slice.
+- Next gate: capability assembly is built and merged (T1–T3) with T4's boundaries/failure-modes done and the live smoke *procedure* documented (`plugins/assembly/docs/SMOKE_TESTS.md`). The one remaining step is the founder running the **recorded end-to-end smoke run** in a live `npx skills` environment (`needs_founder_input: true`). Older parallel items remain open but non-blocking: founder review/acceptance of `.agents/specs/assembly-1-0.md`, and the remaining Stage 0 eval-harness slice.
 
 ## Next Recommended Skills
 
-- `build` (capability assembly T4: boundaries + the recorded end-to-end smoke run, which needs live `npx skills`)
+- `qa` (run the documented capability-assembly live smoke procedure in a real `npx skills` env, then record evidence in `.agents/qa/`)
 - `build`/`plan` for the remaining Stage 0 eval-harness slice (parallel, non-blocking)
 
 ## 10x Direction (accepted 2026-06-01)
@@ -89,7 +89,7 @@ roadmap; recorded as its own thread, not yet specced.
 - Brief: `docs/product/discovery-capability-assembly.md`
 - Spec: `.agents/specs/capability-assembly.md` (accepted; design revised 2026-06-04 after a design tournament).
 - Design (decided 2026-06-04): a **shared capability-acquisition behavior**, not a new skill — `init` seeds it, `build` fires it just-in-time (task-scoped), `project-status` re-runs it. Public surface stays at 13. A 5-approach tournament found the original 14th-skill design was a strong #2 that paid an avoidable surface tax; the founder adopted the hybrid.
-- Plan: `tasks/plan.md` — 4 dependency-ordered tasks + 2 checkpoints (stack detection → shared behavior + persistence → call-site wiring → boundaries/smoke). T1–T3 merged (PRs #18/#19/#20); only T4 (boundaries + recorded live smoke) remains. Next: `build` T4.
+- Plan: `tasks/plan.md` — T1–T3 merged (PRs #18/#19/#20); T4 boundaries/failure-modes done and the live smoke procedure documented. Only the founder-run recorded live-smoke evidence remains.
 
 ## Current 1.0 Direction
 
@@ -109,15 +109,15 @@ roadmap; recorded as its own thread, not yet specced.
 
 ## Next Concrete Action
 
-Capability-assembly design is settled (hybrid behavior, see thread above). **T1–T3
-done**: `scripts/detect_stack.py` + `references/stack-signals.md` ship stack
-detection; `references/capability-acquisition.md` defines the shared behavior with
-dual persistence (`AGENTS.md` Capabilities + status-block `capabilities:`,
-shape-checked by `validate_status.py`); and the behavior is wired into `init`
-(seed), `build` (task-scoped just-in-time trigger), and `project-status` (re-run).
-Surface stays 13. Checkpoint B (a *recorded* end-to-end run) is still open — it
-needs the live `npx skills` registry/install. Next is `build` T4: boundaries,
-failure modes, and that recorded smoke run — the last slice.
+Capability assembly is **built and merged** (hybrid behavior, surface stays 13):
+T1 stack detection, T2 shared behavior + dual persistence, T3 wired into `init` /
+`build` / `project-status`. T4's boundaries and failure-handling are in
+`references/capability-acquisition.md`, and the live smoke **procedure** is
+documented in `plugins/assembly/docs/SMOKE_TESTS.md`.
+
+The one remaining step is **founder-run**: execute that recorded end-to-end smoke
+run in a real `npx skills` environment (the sandbox has no registry/network) and
+drop the evidence in `.agents/qa/`. That closes Checkpoint B and T4.
 
 Parallel open item, not blocking: the remaining **Stage 0 eval-harness** slice of
 `.agents/plans/2026-06-01-assembly-10x-roadmap.md` (a runner, the rubric file format,
