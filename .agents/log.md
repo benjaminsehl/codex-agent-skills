@@ -30,7 +30,8 @@ Append meaningful agent handoff events, skipped gates, recovery notes, and proje
 - Merged PR #17 (design pivot) and PR #18 (build T1: `detect_stack.py` + `stack-signals.md`, `--selftest` in CI).
 - Build T2 (Checkpoint A): wrote `references/capability-acquisition.md` (the shared behavior); added the `AGENTS.md` Capabilities section to the template and this repo; added the `capabilities:` list to the `assembly-status/v1` block with a `validate_status.py` shape-check (name+source required). Surface unchanged at 13.
 - Merged PR #19 (T2). Build T3: wired the behavior into `init` (stack-seeded post-scaffold, via `${CLAUDE_PLUGIN_ROOT}/scripts/detect_stack.py`), `build` (task-scoped JIT clause), and `project-status` (re-assemble route); added 3 SMOKE_TESTS rows + a checklist item. Skills stay thin; surface stays 13. Checkpoint B (a *recorded* run) stays open — needs live `npx skills`; lands with T4.
-- Mid-stream, PRs #21/#22 landed on `main` (docs↔`.agents/` audience split). Rebased the T3 branch onto the restructured `main` and re-applied T3 + reconciled `.agents/status.md` (moved from `docs/`). Next: `build` T4.
+- Mid-stream, PRs #21/#22 landed on `main` (docs↔`.agents/` audience split). Rebased the T3 branch onto the restructured `main`, re-applied T3, reconciled `.agents/status.md` (moved from `docs/`), and merged PR #20.
+- T4 (docs): boundaries + failure-handling already lived in `capability-acquisition.md` (T2), so no agent-operating-protocol floor line was added (kept capability-specific in the behavior reference). Wrote the live smoke **procedure** in `SMOKE_TESTS.md`. The remaining piece — the *recorded* live smoke run — needs a real `npx skills` env, so it's founder-run; status set `needs_founder_input: true`, `next_skill: qa`.
 
 ## 2026-05-27
 

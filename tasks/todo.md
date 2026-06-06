@@ -33,5 +33,6 @@
 - [x] T2: Shared capability-acquisition behavior + persistence (AGENTS.md + status block); surface stays 13
 - [x] Checkpoint A: behavior spec-complete (detect→find→verify→install→persist), surface unchanged
 - [x] T3: Call-site wiring (`init` seed, `build` task-scoped trigger, `project-status` re-run)
-- [ ] Checkpoint B: end-to-end scaffold → init/build/project-status run *recorded* in both surfaces (needs live `npx skills`; lands with T4)
-- [ ] T4: Boundaries, failure modes, smoke evidence
+- [ ] Checkpoint B: end-to-end scaffold → init/build/project-status run *recorded* in both surfaces (needs live `npx skills`; founder-run)
+- [x] T4: Boundaries + failure modes (in `capability-acquisition.md`) and live smoke *procedure* documented in `SMOKE_TESTS.md`
+- [ ] T4 evidence: recorded live smoke run (founder-run, needs `npx skills` env) → `.agents/qa/`
