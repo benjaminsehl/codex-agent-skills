@@ -114,6 +114,19 @@ def validate(data: dict) -> None:
     if not isinstance(escalation, list) or not escalation:
         raise StatusError("escalation_floor must be a non-empty list")
 
+    # capabilities is optional (added by the capability-acquisition behavior), but
+    # when present it must carry the durable shape the AGENTS.md mirror relies on.
+    capabilities = data.get("capabilities")
+    if capabilities is not None:
+        if not isinstance(capabilities, list):
+            raise StatusError("capabilities must be a list when present")
+        for index, entry in enumerate(capabilities):
+            if not isinstance(entry, dict):
+                raise StatusError(f"capabilities[{index}] must be a mapping")
+            for key in ("name", "source"):
+                if key not in entry:
+                    raise StatusError(f"capabilities[{index}] missing key: {key}")
+
 
 def main() -> int:
     try:

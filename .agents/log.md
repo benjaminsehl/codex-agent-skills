@@ -27,6 +27,8 @@ Append meaningful agent handoff events, skipped gates, recovery notes, and proje
 - PR #15 merged (discovery brief + spec on `main`). Ran `plan` → `tasks/plan.md` + `tasks/todo.md` checklist. Noted Stage 0 (PR #14) resolved the status-block dependency. Engineering choice: stack detection as `detect_stack.py`. Stopped at founder review gate.
 - PR #17 Codex review (5×P2) addressed: fixed plan skill path to `plugins/assembly/skills/`; folded persistence into the public-exposure slice so `assemble` is spec-complete at first exposure (5 tasks → 4); flipped spec status to accepted; synced the status machine block and reconciled the two next-action threads. Surfaced the capability-assembly-vs-Stage-0 prioritization as a founder decision rather than picking.
 - Ran a design tournament (5 approaches, adversarial judge) to test whether the 14th-`assemble`-skill design was the global maximum. Verdict: it was a strong #2; a **hybrid** wins — capability acquisition as a shared `references/capability-acquisition.md` behavior (no new skill), invoked by `init` (seed), `build` (task-scoped JIT trigger), and `project-status` (re-run). Founder adopted the hybrid. Revised the spec (flipped decision #1; surface stays 13) and restructured `tasks/plan.md` (4 tasks, no surface-registration task).
+- Merged PR #17 (design pivot) and PR #18 (build T1: `detect_stack.py` + `stack-signals.md`, `--selftest` in CI).
+- Build T2 (Checkpoint A): wrote `references/capability-acquisition.md` (the shared behavior); added the `AGENTS.md` Capabilities section to the template and this repo; added the `capabilities:` list to the `assembly-status/v1` block with a `validate_status.py` shape-check (name+source required). Surface unchanged at 13. Next: T3 call-site wiring.
 
 ## 2026-05-27
 

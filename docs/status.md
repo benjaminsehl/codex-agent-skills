@@ -12,7 +12,7 @@ Traffic state: pre-live
 schema: assembly-status/v1
 project: assembly
 phase: proposal
-current_gate: capability-assembly-build-t2
+current_gate: capability-assembly-build-t3
 next_skill: build
 traffic_state: pre-live
 blocked: false
@@ -37,6 +37,7 @@ escalation_floor:                 # never autonomous, in any traffic state
   - privacy-sensitive-data
   - irreversible-destructive-ops
   - merge-to-default-when-live
+capabilities: []                  # domain skills assembled for the stack; see references/capability-acquisition.md
 ```
 
 ## Autonomy
@@ -108,12 +109,14 @@ roadmap; recorded as its own thread, not yet specced.
 
 ## Next Concrete Action
 
-Capability-assembly design is settled (hybrid behavior, see thread above). **T1
-done**: `scripts/detect_stack.py` + `references/stack-signals.md` ship stack
-detection (JSON `{root, stacks, signals}`, multi-stack, `--selftest` wired into
-CI). Next is `build` T2: the shared `references/capability-acquisition.md`
-behavior + persistence (`AGENTS.md` Capabilities + status-block `capabilities:`),
-surface stays 13.
+Capability-assembly design is settled (hybrid behavior, see thread above). **T1 +
+T2 done** (Checkpoint A): `scripts/detect_stack.py` + `references/stack-signals.md`
+ship stack detection; `references/capability-acquisition.md` defines the shared
+behavior (detect→confirm→find→verify→install→report→persist→log) with dual
+persistence (`AGENTS.md` Capabilities section + status-block `capabilities:` list,
+shape-checked by `validate_status.py`). Surface stays 13. Next is `build` T3: wire
+the behavior into `init` (seed), `build` (task-scoped trigger), and
+`project-status` (re-run).
 
 Parallel open item, not blocking: the remaining **Stage 0 eval-harness** slice of
 `docs/plans/2026-06-01-assembly-10x-roadmap.md` (a runner, the rubric file format,

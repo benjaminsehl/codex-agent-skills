@@ -42,6 +42,16 @@ Use `next` when the user asks to continue through the normal process and the nex
 - Quality pass: `review` or `code-simplify`
 - Release decision: `ship`
 
+## Capabilities
+
+Domain skills assembled for this project's stack via the capability-acquisition
+behavior (`init` seeds them, `build` adds them just-in-time, `project-status`
+re-runs it). Each entry: skill name, source, why. Mirror of the status block's
+`capabilities:` list where that block exists. See the plugin's
+`references/capability-acquisition.md`.
+
+- _none yet_
+
 ## Autonomy And Escalation
 
 Reserve founder attention for product and UX decisions; run engineering autonomously.
