@@ -19,10 +19,10 @@ Outcome: the 1.0 behavior spec and north-star vision are coherent enough for imp
 
 Tasks:
 
-- Align `docs/specs/assembly-1-0.md` with the human-led app factory vision.
+- Align `.agents/specs/assembly-1-0.md` with the human-led app factory vision.
 - Add app-factory north-star and research synthesis docs.
 - Define what is blocking for 1.0 versus deferred to the post-1.0 orchestrator.
-- Update `docs/status.md` with the current gate and next skills.
+- Update `.agents/status.md` with the current gate and next skills.
 
 Exit evidence:
 
@@ -65,8 +65,8 @@ Tasks:
 Exit evidence:
 
 - PR includes why, principles, approach, verification, risks, and follow-up.
-- `docs/qa/assembly-1-0-smoke-evidence.md` records actual checks.
-- `docs/release/assembly-1-0-checklist.md` reaches a clear go/no-go.
+- `.agents/qa/assembly-1-0-smoke-evidence.md` records actual checks.
+- `.agents/release/assembly-1-0-checklist.md` reaches a clear go/no-go.
 
 ### 4. CFO External Proof
 
@@ -78,7 +78,7 @@ Tasks:
 - Confirm scaffold preserves any existing instructions.
 - Update CFO status with phase and next gate.
 - Run a minimal `next` or `project-status` continuation check.
-- Record proof in `docs/projects/cfo-proof/status.md`.
+- Record proof in `.agents/projects/cfo-proof/status.md`.
 
 Exit evidence:
 

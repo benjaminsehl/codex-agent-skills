@@ -38,7 +38,7 @@ Flag business, user, and viability concerns; do not decide them. The founder is 
 9. Apply the business-model lens when ICP, pricing, distribution, retention, or cost structure matters. Surface concerns and trade-offs; do not pick a pricing, ICP, or distribution strategy for the founder.
 10. Apply the design-plan lens when the next step is a planned UI or user flow.
 11. Produce a discovery brief covering user, pain, wedge, alternatives, risks, evidence needed, open questions, and recommended next skill.
-12. Save the brief to `docs/product/discovery-<slug>.md` in the active project or subproject, using a slug derived from the idea name. Update `docs/status.md` to point to it. Append a one-line entry to `.agents/log.md` naming the brief and the recommended next skill.
+12. Save the brief to `docs/product/discovery-<slug>.md` in the active project or subproject, using a slug derived from the idea name. Update `.agents/status.md` to point to it. Append a one-line entry to `.agents/log.md` naming the brief and the recommended next skill.
 13. Stop before `spec` unless the user asks to continue.
 
 ## Verification
@@ -50,7 +50,7 @@ Flag business, user, and viability concerns; do not decide them. The founder is 
 - Alternatives and current workarounds are named.
 - Business, user, and viability concerns are flagged, not decided.
 - Open questions are visible instead of hidden behind confident recommendations.
-- The discovery brief is saved to `docs/product/discovery-<slug>.md` and referenced from `docs/status.md`.
+- The discovery brief is saved to `docs/product/discovery-<slug>.md` and referenced from `.agents/status.md`.
 - The next evidence step is explicit.
 
 ## Stop Conditions

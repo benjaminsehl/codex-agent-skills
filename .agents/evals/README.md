@@ -1,7 +1,7 @@
 # Evals
 
 Assembly's measurement substrate. See
-`docs/plans/2026-06-01-assembly-10x-roadmap.md` for the full thesis and
+`.agents/plans/2026-06-01-assembly-10x-roadmap.md` for the full thesis and
 sequencing, and `docs/decisions/2026-06-01-measurement-first-10x.md` for the
 direction decision.
 
@@ -21,5 +21,5 @@ Track A corrections become Track B rubric criteria, so one founder correction
 raises the floor on every future autonomous review.
 
 This directory is added to Assembly's own repo first (scope: Ben's personal
-stack). Folding `docs/evals/` into the project kernel structure and `init`
+stack). Folding `.agents/evals/` into the project kernel structure and `init`
 scaffold is a roadmap item, not done yet.

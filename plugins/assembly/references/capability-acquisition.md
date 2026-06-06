@@ -3,7 +3,7 @@
 The single procedure for equipping a project with the best domain skills for its
 stack (e.g. `cloudflare/skills` for a Cloudflare project), so per-domain competence
 travels with the project instead of living in whoever prompted well. Spec:
-`docs/specs/capability-assembly.md`.
+`.agents/specs/capability-assembly.md`.
 
 This is a **shared behavior, not a skill**. Three call sites invoke it; the public
 skill surface does not grow:
@@ -68,7 +68,7 @@ behavior. Mirror of the status block's `capabilities:` list where that block exi
 
 ### Status block `capabilities:` list (when the block exists)
 
-When the project's `docs/status.md` carries the machine-readable
+When the project's `.agents/status.md` carries the machine-readable
 `assembly-status/v1` block (Assembly's own repo does; fresh scaffolds do not yet),
 mirror each entry into a `capabilities:` list:
 

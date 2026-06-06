@@ -1,6 +1,6 @@
 # Project Status: Assembly
 
-Last updated: 2026-06-04
+Last updated: 2026-06-06
 Current phase: proposal
 Traffic state: pre-live
 
@@ -17,7 +17,7 @@ next_skill: build
 traffic_state: pre-live
 blocked: false
 needs_founder_input: false
-last_verified: 2026-06-04
+last_verified: 2026-06-06
 autonomy:
   product_decisions: founder      # always escalate, in product-implication language
   engineering_decisions: agent    # autonomous, validated by reviewer sub-agents
@@ -49,11 +49,11 @@ capabilities: []                  # domain skills assembled for the stack; see r
 
 - Current phase: proposal
 - Why: Assembly now installs and loads as a working plugin in both Codex and Claude Code, and the product direction is sharper: Assembly 1.0 proves the human-led control loop for an eventual agentic app factory across both runtimes; a post-1.0 orchestrator becomes the next step only after the loop is reliable.
-- Evidence: PR #1 merged the project-workflow foundation into `main`; PR #2 merged as `15cb36a`; PR #4 added dual-runtime support via `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json`, and validator/audit-script updates; Assembly `0.8.3` is installed under `~/.codex/plugins/cache/assembly/assembly/0.8.3`; `docs/specs/assembly-1-0.md` defines the 1.0 behavior spec; `docs/product/app-factory-north-star.md`, `docs/research/2026-05-27-agentic-orchestration-research.md`, `docs/plans/2026-05-27-assembly-1-0-release-plan.md`, and `docs/plans/2026-05-27-post-1-0-orchestrator-roadmap.md` now capture the north star, research synthesis, release path, and post-1.0 roadmap.
+- Evidence: PR #1 merged the project-workflow foundation into `main`; PR #2 merged as `15cb36a`; PR #4 added dual-runtime support via `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json`, and validator/audit-script updates; Assembly `0.8.3` is installed under `~/.codex/plugins/cache/assembly/assembly/0.8.3`; `.agents/specs/assembly-1-0.md` defines the 1.0 behavior spec; `docs/product/app-factory-north-star.md`, `.agents/research/2026-05-27-agentic-orchestration-research.md`, `.agents/plans/2026-05-27-assembly-1-0-release-plan.md`, and `.agents/plans/2026-05-27-post-1-0-orchestrator-roadmap.md` now capture the north star, research synthesis, release path, and post-1.0 roadmap.
 - Structure decision: agent-only operating files now belong under `.agents/`, with root `AGENTS.md` as the visible entrypoint and `reference/` reserved for raw source material.
 - Product decision: 1.0 ships as a dual-runtime plugin (Codex + Claude Code) from the same bundle and must pass install/smoke checks in both runtimes; post-1.0 orchestration is the next strategic direction. See `docs/decisions/2026-05-27-dual-runtime-claude-code.md`.
 - Product-intent completeness: what is being built, why it matters, and what good looks like are now explicit in the spec and north-star docs.
-- Next gate: the immediate active gate is `build` T1 of the capability-assembly plan (`tasks/plan.md`, PR #17), matching `current_gate` in the block above. Older parallel items remain open but non-blocking: founder review/acceptance of `docs/specs/assembly-1-0.md`, and the remaining Stage 0 eval-harness slice.
+- Next gate: the immediate active gate is `build` T1 of the capability-assembly plan (`tasks/plan.md`, PR #17), matching `current_gate` in the block above. Older parallel items remain open but non-blocking: founder review/acceptance of `.agents/specs/assembly-1-0.md`, and the remaining Stage 0 eval-harness slice.
 
 ## Next Recommended Skills
 
@@ -69,12 +69,12 @@ axis; 10x closes four instrumented loops, sequenced so autonomy scales only as
 fast as measured quality, alignment, and coherence allow.
 
 The measurement substrate has two tracks: a sparse, founder-authored
-course-correction ledger (`docs/evals/course-corrections/`) for product
+course-correction ledger (`.agents/evals/course-corrections/`) for product
 direction, and agent-graded quality evals (rubrics + fixtures) for code the
 founder will not review. Scope is Ben's personal stack; "ship 1.0" is not a
 blocking gate — do the most important thing at any moment.
 
-- Roadmap: `docs/plans/2026-06-01-assembly-10x-roadmap.md`
+- Roadmap: `.agents/plans/2026-06-01-assembly-10x-roadmap.md`
 - Decision: `docs/decisions/2026-06-01-measurement-first-10x.md`
 
 ## New Thread: Capability Assembly (captured 2026-06-02)
@@ -87,7 +87,7 @@ capability acquisition** — distinct from the four measurement loops of the 10x
 roadmap; recorded as its own thread, not yet specced.
 
 - Brief: `docs/product/discovery-capability-assembly.md`
-- Spec: `docs/specs/capability-assembly.md` (accepted; design revised 2026-06-04 after a design tournament).
+- Spec: `.agents/specs/capability-assembly.md` (accepted; design revised 2026-06-04 after a design tournament).
 - Design (decided 2026-06-04): a **shared capability-acquisition behavior**, not a new skill — `init` seeds it, `build` fires it just-in-time (task-scoped), `project-status` re-runs it. Public surface stays at 13. A 5-approach tournament found the original 14th-skill design was a strong #2 that paid an avoidable surface tax; the founder adopted the hybrid.
 - Plan: `tasks/plan.md` (PR #17) — 4 dependency-ordered tasks + 2 checkpoints (stack detection → shared behavior + persistence → call-site wiring → boundaries/smoke). Smaller than the pre-tournament plan (no surface registration). Next: `build` T1.
 
@@ -119,7 +119,7 @@ the behavior into `init` (seed), `build` (task-scoped trigger), and
 `project-status` (re-run).
 
 Parallel open item, not blocking: the remaining **Stage 0 eval-harness** slice of
-`docs/plans/2026-06-01-assembly-10x-roadmap.md` (a runner, the rubric file format,
+`.agents/plans/2026-06-01-assembly-10x-roadmap.md` (a runner, the rubric file format,
 1–2 fixtures); Stage 0's other pieces shipped in PR #14. The earlier 1.0
 release-plan work is not abandoned but is no longer a blocking gate — pursue
 whatever is most important at the moment.

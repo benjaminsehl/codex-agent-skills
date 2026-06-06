@@ -2,7 +2,7 @@
 
 Last updated: 2026-06-04
 Status: draft for review
-Spec: `docs/specs/capability-assembly.md`
+Spec: `.agents/specs/capability-assembly.md`
 Discovery: `docs/product/discovery-capability-assembly.md`
 
 ## Scope being planned
@@ -71,7 +71,7 @@ surface stays at 13.
 - **Files:**
   - `plugins/assembly/references/capability-acquisition.md` (new)
   - `plugins/assembly/templates/AGENTS.md` (Capabilities section) + `plugins/assembly/scripts/scaffold_project.py` (seed it)
-  - `docs/status.md` (`capabilities: []` in the block); optionally `plugins/assembly/scripts/validate_status.py` (shape-check the field)
+  - `.agents/status.md` (`capabilities: []` in the block); optionally `plugins/assembly/scripts/validate_status.py` (shape-check the field)
 - **Depends on:** T1.
 
 > **Checkpoint A:** the shared behavior is spec-complete (detect → find → verify →
