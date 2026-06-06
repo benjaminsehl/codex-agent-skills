@@ -29,7 +29,7 @@
 
 ## Capability Assembly (shared behavior) — plan: `tasks/plan.md`
 
-- [ ] T1: Stack detection (`detect_stack.py` + signal reference)
+- [x] T1: Stack detection (`detect_stack.py` + signal reference)
 - [ ] T2: Shared capability-acquisition behavior + persistence (AGENTS.md + status block); surface stays 13
 - [ ] Checkpoint A: behavior spec-complete (detect→find→verify→install→persist), surface unchanged
 - [ ] T3: Call-site wiring (`init` seed, `build` task-scoped trigger, `project-status` re-run)
