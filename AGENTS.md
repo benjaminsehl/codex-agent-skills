@@ -52,3 +52,12 @@ git diff --check
 ```
 
 CI (`.github/workflows/validate.yml`) runs these on every PR and on `main`.
+
+## Capabilities
+
+Domain skills assembled for Assembly's own stack via the capability-acquisition
+behavior (`plugins/assembly/references/capability-acquisition.md`); mirror of the
+`capabilities:` list in `docs/status.md`. Assembly is a skills toolkit, not a
+platform app, so it has no domain skills to assemble yet.
+
+- _none yet_
