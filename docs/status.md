@@ -12,7 +12,7 @@ Traffic state: pre-live
 schema: assembly-status/v1
 project: assembly
 phase: proposal
-current_gate: capability-assembly-build-t1
+current_gate: capability-assembly-build-t2
 next_skill: build
 traffic_state: pre-live
 blocked: false
@@ -108,10 +108,12 @@ roadmap; recorded as its own thread, not yet specced.
 
 ## Next Concrete Action
 
-Capability-assembly design is settled (hybrid behavior, see thread above). Next is
-`build` T1 of `tasks/plan.md`: stack detection (`detect_stack.py` + signal
-reference), once PR #17 (the revised plan) is reviewed/merged or the founder says
-go.
+Capability-assembly design is settled (hybrid behavior, see thread above). **T1
+done**: `scripts/detect_stack.py` + `references/stack-signals.md` ship stack
+detection (JSON `{root, stacks, signals}`, multi-stack, `--selftest` wired into
+CI). Next is `build` T2: the shared `references/capability-acquisition.md`
+behavior + persistence (`AGENTS.md` Capabilities + status-block `capabilities:`),
+surface stays 13.
 
 Parallel open item, not blocking: the remaining **Stage 0 eval-harness** slice of
 `docs/plans/2026-06-01-assembly-10x-roadmap.md` (a runner, the rubric file format,
