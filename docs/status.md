@@ -1,6 +1,6 @@
 # Project Status: Assembly
 
-Last updated: 2026-06-01
+Last updated: 2026-06-04
 Current phase: proposal
 Traffic state: pre-live
 
@@ -12,12 +12,12 @@ Traffic state: pre-live
 schema: assembly-status/v1
 project: assembly
 phase: proposal
-current_gate: stage-0-foundation
+current_gate: capability-assembly-build-t1
 next_skill: build
 traffic_state: pre-live
 blocked: false
 needs_founder_input: false
-last_verified: 2026-06-01
+last_verified: 2026-06-04
 autonomy:
   product_decisions: founder      # always escalate, in product-implication language
   engineering_decisions: agent    # autonomous, validated by reviewer sub-agents
@@ -52,12 +52,12 @@ escalation_floor:                 # never autonomous, in any traffic state
 - Structure decision: agent-only operating files now belong under `.agents/`, with root `AGENTS.md` as the visible entrypoint and `reference/` reserved for raw source material.
 - Product decision: 1.0 ships as a dual-runtime plugin (Codex + Claude Code) from the same bundle and must pass install/smoke checks in both runtimes; post-1.0 orchestration is the next strategic direction. See `docs/decisions/2026-05-27-dual-runtime-claude-code.md`.
 - Product-intent completeness: what is being built, why it matters, and what good looks like are now explicit in the spec and north-star docs.
-- Next gate: founder review/acceptance of `docs/specs/assembly-1-0.md`, then `plan` for release-candidate implementation and proof tasks.
+- Next gate: the immediate active gate is `build` T1 of the capability-assembly plan (`tasks/plan.md`, PR #17), matching `current_gate` in the block above. Older parallel items remain open but non-blocking: founder review/acceptance of `docs/specs/assembly-1-0.md`, and the remaining Stage 0 eval-harness slice.
 
 ## Next Recommended Skills
 
-- `plan` (break Stage 0 of the 10x roadmap into slices)
-- `build`
+- `build` (capability assembly T1: stack detection — `detect_stack.py` + signal reference)
+- `build`/`plan` for the remaining Stage 0 eval-harness slice (parallel, non-blocking)
 
 ## 10x Direction (accepted 2026-06-01)
 
@@ -86,7 +86,9 @@ capability acquisition** — distinct from the four measurement loops of the 10x
 roadmap; recorded as its own thread, not yet specced.
 
 - Brief: `docs/product/discovery-capability-assembly.md`
-- Spec: `docs/specs/capability-assembly.md` (draft for review). Founder mini-discovery (2026-06-02) set: new `assemble` skill, sniff-then-confirm stack detection, persist to both `AGENTS.md` + status block, auto-install verified matches. Next gate: founder accepts the spec, then `plan`.
+- Spec: `docs/specs/capability-assembly.md` (accepted; design revised 2026-06-04 after a design tournament).
+- Design (decided 2026-06-04): a **shared capability-acquisition behavior**, not a new skill — `init` seeds it, `build` fires it just-in-time (task-scoped), `project-status` re-runs it. Public surface stays at 13. A 5-approach tournament found the original 14th-skill design was a strong #2 that paid an avoidable surface tax; the founder adopted the hybrid.
+- Plan: `tasks/plan.md` (PR #17) — 4 dependency-ordered tasks + 2 checkpoints (stack detection → shared behavior + persistence → call-site wiring → boundaries/smoke). Smaller than the pre-tournament plan (no surface registration). Next: `build` T1.
 
 ## Current 1.0 Direction
 
@@ -106,10 +108,13 @@ roadmap; recorded as its own thread, not yet specced.
 
 ## Next Concrete Action
 
-Stage 0 of `docs/plans/2026-06-01-assembly-10x-roadmap.md` is in progress. This
-slice adds CI (`.github/workflows/validate.yml`) running the validators on every
-PR, the machine-readable status block above, and `validate_status.py` to keep it
-honest. Remaining Stage 0 slice: the eval-harness skeleton (a runner, the rubric
-file format, and 1–2 fixtures). The earlier 1.0 release-plan work
-(`docs/plans/2026-05-27-assembly-1-0-release-plan.md`) is not abandoned but is no
-longer a blocking gate — pursue whatever is most important at the moment.
+Capability-assembly design is settled (hybrid behavior, see thread above). Next is
+`build` T1 of `tasks/plan.md`: stack detection (`detect_stack.py` + signal
+reference), once PR #17 (the revised plan) is reviewed/merged or the founder says
+go.
+
+Parallel open item, not blocking: the remaining **Stage 0 eval-harness** slice of
+`docs/plans/2026-06-01-assembly-10x-roadmap.md` (a runner, the rubric file format,
+1–2 fixtures); Stage 0's other pieces shipped in PR #14. The earlier 1.0
+release-plan work is not abandoned but is no longer a blocking gate — pursue
+whatever is most important at the moment.
