@@ -15,6 +15,7 @@ Implement the next planned task. Build is a router, not a dispatcher: it execute
 - `references/testing-patterns.md`: testing patterns and regression coverage.
 - `references/project-phases.md`: build prerequisites and engineering phase gates.
 - `references/agent-operating-protocol.md`: unclear prompts, skipped prerequisites, and hard boundaries.
+- `references/capability-acquisition.md`: just-in-time domain-skill acquisition when a slice needs unfamiliar platform knowledge.
 
 ## Workflow
 
@@ -25,7 +26,7 @@ Implement the next planned task. Build is a router, not a dispatcher: it execute
    - Plan missing or stale → stop and invoke `plan`.
    - Multiple plausible tasks exist → present 2-3 candidate tasks with evidence and ask the founder to pick. Use the explicit options-list pattern.
    - One unambiguous pending task → implement it.
-4. Load acceptance criteria, relevant source files, and project commands for the chosen task.
+4. Load acceptance criteria, relevant source files, and project commands for the chosen task. If the slice needs platform or framework behavior you have no loaded domain skill for, run the capability-acquisition behavior with a **task-scoped** query (the specific API/feature, not the whole stack) — confirm → verify → install → record — before improvising platform code.
 5. If the task modifies tested legacy code, write or identify characterization tests covering current behavior before changing anything. Required, not "where practical."
 6. For new behavior changes, write or identify the failing/targeted test before implementation.
 7. Make the smallest complete change that satisfies the acceptance criteria.

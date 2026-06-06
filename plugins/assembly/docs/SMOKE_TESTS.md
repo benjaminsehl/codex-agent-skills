@@ -55,6 +55,9 @@ After enabling and restarting Codex, confirm `Assembly` appears in the active pl
 | `review` | "Use review on the current diff." | Findings first, file/line references when issues exist, and test gaps. |
 | `code-simplify` | "Use code-simplify on the changed files." | Behavior-preserving cleanup with verification evidence. |
 | `ship` | "Use ship to decide whether this is ready to release." | GO/NO-GO, blockers, risks, evidence, rollback, PR readiness, and follow-up learning. |
+| `init` (capability) | "Use init, then assemble skills for this Cloudflare project." | Detects the stack (`detect_stack.py`), confirms it, verifies reputation before install, and records skills in the `AGENTS.md` Capabilities section (+ status block where present). |
+| `build` (capability) | "Use build on a slice that calls an unfamiliar platform API." | Runs task-scoped capability acquisition (confirm → verify → install → record) before improvising platform code. |
+| `project-status` (capability) | "Use project-status; this project just added Cloudflare." | Offers the explicit re-assemble-capabilities route. |
 
 ## Claude Code Agents and Hooks
 
@@ -84,7 +87,8 @@ CLAUDE_PROJECT_DIR="$PWD" bash plugins/assembly/hooks/session-start.sh
 
 ## Manual Acceptance Checklist
 
-- [ ] Only the 13 public skills are triggerable from this plugin.
+- [ ] Only the 13 public skills are triggerable from this plugin (capability acquisition is a shared behavior, not a 14th skill).
+- [ ] Capability acquisition runs from `init` (stack-seeded), `build` (task-scoped just-in-time), and `project-status` (re-run), verifies reputation before install, and records to the `AGENTS.md` Capabilities section + the status-block `capabilities:` list.
 - [ ] `next` dispatches to the next evidence-backed action and does not guess when status is ambiguous.
 - [ ] `project-status` handles scaffold, status, and repair without separate `new-project` or `introspect` skills.
 - [ ] Scaffolds keep agent-only operating files under `.agents/` and do not create `docs/agent-guidance.md`.

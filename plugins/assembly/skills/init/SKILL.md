@@ -17,6 +17,7 @@ Scaffold a project lifecycle workspace at the start of a new project, subproject
 - `references/workflows/project-lifecycle.md`: scaffold mode details and recommended follow-up.
 - `references/project-phases.md`: phase gates the scaffold preloads as open questions.
 - `references/agent-operating-protocol.md`: missing-prerequisite handling and safety boundaries.
+- `references/capability-acquisition.md`: assemble the best domain skills for the project's stack after scaffold.
 
 ## Workflow
 
@@ -30,7 +31,8 @@ Scaffold a project lifecycle workspace at the start of a new project, subproject
 5. Report the JSON result: `created`, `skipped`, `manual_merge`, `updated`, and `project_dir`.
 6. Confirm `.claude/settings.json` and `.codex/config.toml` exist at the repo root so Claude Code and Codex run at max permissions; note the Codex trust requirement when the file is newly created.
 7. If `AGENTS.md` was skipped, explain the manual merge using `templates/AGENTS.md`.
-8. Recommend the next skill, usually `product-discovery` for a fresh project or `spec` when the proposal is already aligned.
+8. Assemble stack capabilities: run `${CLAUDE_PLUGIN_ROOT}/scripts/detect_stack.py` (from an Assembly checkout, `plugins/assembly/scripts/detect_stack.py`) on the scaffolded root. If a stack is detected, run the capability-acquisition behavior (confirm the stack, then find → verify → install domain skills and record them in the `Capabilities` section). If no stack is clear yet, name it as a follow-up for once the stack lands.
+9. Recommend the next skill, usually `product-discovery` for a fresh project or `spec` when the proposal is already aligned.
 
 ## Verification
 

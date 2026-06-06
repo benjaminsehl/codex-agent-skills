@@ -12,7 +12,7 @@ Traffic state: pre-live
 schema: assembly-status/v1
 project: assembly
 phase: proposal
-current_gate: capability-assembly-build-t3
+current_gate: capability-assembly-build-t4
 next_skill: build
 traffic_state: pre-live
 blocked: false
@@ -53,11 +53,11 @@ capabilities: []                  # domain skills assembled for the stack; see r
 - Structure decision: agent-only operating files now belong under `.agents/`, with root `AGENTS.md` as the visible entrypoint and `reference/` reserved for raw source material.
 - Product decision: 1.0 ships as a dual-runtime plugin (Codex + Claude Code) from the same bundle and must pass install/smoke checks in both runtimes; post-1.0 orchestration is the next strategic direction. See `docs/decisions/2026-05-27-dual-runtime-claude-code.md`.
 - Product-intent completeness: what is being built, why it matters, and what good looks like are now explicit in the spec and north-star docs.
-- Next gate: the immediate active gate is `build` T1 of the capability-assembly plan (`tasks/plan.md`, PR #17), matching `current_gate` in the block above. Older parallel items remain open but non-blocking: founder review/acceptance of `.agents/specs/assembly-1-0.md`, and the remaining Stage 0 eval-harness slice.
+- Next gate: the immediate active gate is `build` T4 of the capability-assembly plan (`tasks/plan.md`), matching `current_gate` in the block above. T1–T3 are merged; the only remaining slice is boundaries + the recorded end-to-end smoke run (needs live `npx skills`). Older parallel items remain open but non-blocking: founder review/acceptance of `.agents/specs/assembly-1-0.md`, and the remaining Stage 0 eval-harness slice.
 
 ## Next Recommended Skills
 
-- `build` (capability assembly T1: stack detection — `detect_stack.py` + signal reference)
+- `build` (capability assembly T4: boundaries + the recorded end-to-end smoke run, which needs live `npx skills`)
 - `build`/`plan` for the remaining Stage 0 eval-harness slice (parallel, non-blocking)
 
 ## 10x Direction (accepted 2026-06-01)
@@ -89,7 +89,7 @@ roadmap; recorded as its own thread, not yet specced.
 - Brief: `docs/product/discovery-capability-assembly.md`
 - Spec: `.agents/specs/capability-assembly.md` (accepted; design revised 2026-06-04 after a design tournament).
 - Design (decided 2026-06-04): a **shared capability-acquisition behavior**, not a new skill — `init` seeds it, `build` fires it just-in-time (task-scoped), `project-status` re-runs it. Public surface stays at 13. A 5-approach tournament found the original 14th-skill design was a strong #2 that paid an avoidable surface tax; the founder adopted the hybrid.
-- Plan: `tasks/plan.md` (PR #17) — 4 dependency-ordered tasks + 2 checkpoints (stack detection → shared behavior + persistence → call-site wiring → boundaries/smoke). Smaller than the pre-tournament plan (no surface registration). Next: `build` T1.
+- Plan: `tasks/plan.md` — 4 dependency-ordered tasks + 2 checkpoints (stack detection → shared behavior + persistence → call-site wiring → boundaries/smoke). T1–T3 merged (PRs #18/#19/#20); only T4 (boundaries + recorded live smoke) remains. Next: `build` T4.
 
 ## Current 1.0 Direction
 
@@ -109,14 +109,15 @@ roadmap; recorded as its own thread, not yet specced.
 
 ## Next Concrete Action
 
-Capability-assembly design is settled (hybrid behavior, see thread above). **T1 +
-T2 done** (Checkpoint A): `scripts/detect_stack.py` + `references/stack-signals.md`
-ship stack detection; `references/capability-acquisition.md` defines the shared
-behavior (detect→confirm→find→verify→install→report→persist→log) with dual
-persistence (`AGENTS.md` Capabilities section + status-block `capabilities:` list,
-shape-checked by `validate_status.py`). Surface stays 13. Next is `build` T3: wire
-the behavior into `init` (seed), `build` (task-scoped trigger), and
-`project-status` (re-run).
+Capability-assembly design is settled (hybrid behavior, see thread above). **T1–T3
+done**: `scripts/detect_stack.py` + `references/stack-signals.md` ship stack
+detection; `references/capability-acquisition.md` defines the shared behavior with
+dual persistence (`AGENTS.md` Capabilities + status-block `capabilities:`,
+shape-checked by `validate_status.py`); and the behavior is wired into `init`
+(seed), `build` (task-scoped just-in-time trigger), and `project-status` (re-run).
+Surface stays 13. Checkpoint B (a *recorded* end-to-end run) is still open — it
+needs the live `npx skills` registry/install. Next is `build` T4: boundaries,
+failure modes, and that recorded smoke run — the last slice.
 
 Parallel open item, not blocking: the remaining **Stage 0 eval-harness** slice of
 `.agents/plans/2026-06-01-assembly-10x-roadmap.md` (a runner, the rubric file format,
