@@ -88,6 +88,19 @@ agent's work *measurably better*; this makes the agent *more domain-capable per
 project*. Record it as its own thread so it is not mis-sequenced into the eval
 work, and so it does not get dropped.
 
+**Confirmed (2026-06-06):** the two threads stay *separate and cross-linked*, not
+merged, and capability assembly was prioritized *ahead of* the measurement stages
+— its build is now complete (T1–T4 merged; only a founder-run live smoke remains),
+so the measurement axis is next. Both serve the same metric (founder attention per unit of
+on-vision product) by the same move — encode once, stop re-doing: the loops
+encode taste, this encodes capability. Decision:
+`docs/decisions/2026-06-06-two-axes-capability-and-measurement.md`. Coupling seams
+to honor later: capabilities ride the same Stage 0 status block; capability
+*quality* should eventually be graded by Track B (agent-graded evals) rather than
+skills.sh reputation alone; a founder correction about a skill choice belongs in
+the Track A ledger; and the discover→verify→filter→install procedure is a
+candidate dynamic workflow.
+
 ## On Supply-Chain / Trust
 
 Founder's instinct (correct, mostly): this is not the concern it would be for code

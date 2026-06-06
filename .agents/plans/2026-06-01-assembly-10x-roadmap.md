@@ -197,6 +197,31 @@ Exit evidence: an operator or simulated operator runs a bounded slice end to end
 from the portable protocol primer and halts on a seeded eval regression rather
 than on a founder check-in.
 
+### Related axis and current priority: capability assembly
+
+A second axis runs in parallel to these four loops: **capability assembly**
+(`.agents/specs/capability-assembly.md`,
+`docs/product/discovery-capability-assembly.md`) — assembling the best domain
+skills for a project's stack so competence travels with the project. It is a
+*separate* axis, deliberately not folded into this roadmap: the four loops make
+the agent's work measurably *better*; capability assembly makes the agent more
+domain-*capable*. Both serve the same metric (founder attention per unit of
+on-vision product) by the same move — encode once, stop re-doing — but through
+different mechanisms. The decision to keep them separate and cross-linked is
+`docs/decisions/2026-06-06-two-axes-capability-and-measurement.md`.
+
+**Priority (2026-06-06):** capability assembly was prioritized *ahead of* Stage 0's
+eval-harness skeleton — a deliberate "most important thing now" call (permitted by
+*Out of scope* below), not drift. Its build is now complete (T1–T4 merged via
+#18/#19/#20/#23; only a founder-run live smoke remains), so the measurement program
+resumes here at **Stage 0** as the next dev work.
+
+Coupling seams to honor when these stages land (see the decision record):
+capabilities already ride the Stage 0 status block; capability *quality* should
+eventually be graded by Track B rather than trusted via skills.sh reputation
+alone; a founder correction about a skill choice belongs in the Track A ledger;
+and capability assembly is itself a candidate dynamic workflow.
+
 ## The 10x metric for this effort
 
 **Founder attention per unit of shipped, on-vision product.** 10x means Ben

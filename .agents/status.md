@@ -53,12 +53,12 @@ capabilities: []                  # domain skills assembled for the stack; see r
 - Structure decision: agent-only operating files now belong under `.agents/`, with root `AGENTS.md` as the visible entrypoint and `reference/` reserved for raw source material.
 - Product decision: 1.0 ships as a dual-runtime plugin (Codex + Claude Code) from the same bundle and must pass install/smoke checks in both runtimes; post-1.0 orchestration is the next strategic direction. See `docs/decisions/2026-05-27-dual-runtime-claude-code.md`.
 - Product-intent completeness: what is being built, why it matters, and what good looks like are now explicit in the spec and north-star docs.
-- Next gate: capability assembly is built and merged (T1–T3) with T4's boundaries/failure-modes done and the live smoke *procedure* documented (`plugins/assembly/docs/SMOKE_TESTS.md`). The one remaining step is the founder running the **recorded end-to-end smoke run** in a live `npx skills` environment (`needs_founder_input: true`). Older parallel items remain open but non-blocking: founder review/acceptance of `.agents/specs/assembly-1-0.md`, and the remaining Stage 0 eval-harness slice.
+- Next gate: capability assembly is built and merged (T1–T3) with T4's boundaries/failure-modes done and the live smoke *procedure* documented (`plugins/assembly/docs/SMOKE_TESTS.md`). The one remaining step is the founder running the **recorded end-to-end smoke run** in a live `npx skills` environment (`needs_founder_input: true`). With the capability-assembly build essentially complete, the deliberately *separate, parallel* measurement-first 10x axis is the next dev work: its Stage 0 eval-harness slice. Founder review/acceptance of `.agents/specs/assembly-1-0.md` remains open but non-blocking. Two-axis relationship and priority: `docs/decisions/2026-06-06-two-axes-capability-and-measurement.md`.
 
 ## Next Recommended Skills
 
 - `qa` (run the documented capability-assembly live smoke procedure in a real `npx skills` env, then record evidence in `.agents/qa/`)
-- `build`/`plan` for the remaining Stage 0 eval-harness slice (parallel, non-blocking)
+- `build`/`plan` for the Stage 0 eval-harness slice of the measurement axis (the next dev work now that the capability build is complete)
 
 ## 10x Direction (accepted 2026-06-01)
 
