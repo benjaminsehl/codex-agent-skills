@@ -119,14 +119,18 @@ Scoped here in full (per founder request); sequenced measurement-first below.
 
 Measurement-first. Each stage leaves evidence the next stage depends on.
 
-### Stage 0 — Foundation (do first; cheap, unblocks everything)
+### Stage 0 — Foundation (do first; cheap, unblocks everything) — **DONE**
 
-- Machine-readable status block in `.agents/status.md`.
-- CI workflow running the four validators on every PR.
-- Eval harness skeleton: a runner, the rubric file format, and 1–2 fixtures.
+- Machine-readable status block in `.agents/status.md`. ✓ (PR #14)
+- CI workflow running the validators on every PR. ✓ (PR #14)
+- Eval harness skeleton: a runner, the rubric file format, and 1–2 fixtures. ✓
+  (`plugins/assembly/scripts/eval_runner.py`, `.agents/evals/rubrics|fixtures/`,
+  spec `.agents/specs/eval-harness.md`). The judge is a deterministic stub here; the
+  real LLM-as-judge backend lands in Stage 2 behind the same interface.
 
-Exit evidence: a PR shows CI green on the validators; one fixture scores through
-the runner end to end.
+Exit evidence met: CI is green on the validators; `eval_runner.py --selftest` scores
+both fixtures end to end (passing fixture → pass/exit 0, regression fixture →
+fail/exit 1) and runs in CI. **Next: Stage 1.**
 
 ### Stage 1 — Alignment loop (founder's primary interface)
 

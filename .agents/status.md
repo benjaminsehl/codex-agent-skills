@@ -12,11 +12,11 @@ Traffic state: pre-live
 schema: assembly-status/v1
 project: assembly
 phase: proposal
-current_gate: capability-assembly-live-smoke
-next_skill: qa
+current_gate: measurement-stage-1-alignment-loop
+next_skill: plan
 traffic_state: pre-live
 blocked: false
-needs_founder_input: true
+needs_founder_input: false
 last_verified: 2026-06-06
 autonomy:
   product_decisions: founder      # always escalate, in product-implication language
@@ -53,12 +53,13 @@ capabilities: []                  # domain skills assembled for the stack; see r
 - Structure decision: agent-only operating files now belong under `.agents/`, with root `AGENTS.md` as the visible entrypoint and `reference/` reserved for raw source material.
 - Product decision: 1.0 ships as a dual-runtime plugin (Codex + Claude Code) from the same bundle and must pass install/smoke checks in both runtimes; post-1.0 orchestration is the next strategic direction. See `docs/decisions/2026-05-27-dual-runtime-claude-code.md`.
 - Product-intent completeness: what is being built, why it matters, and what good looks like are now explicit in the spec and north-star docs.
-- Next gate: capability assembly is built and merged (T1–T3) with T4's boundaries/failure-modes done and the live smoke *procedure* documented (`plugins/assembly/docs/SMOKE_TESTS.md`). The one remaining step is the founder running the **recorded end-to-end smoke run** in a live `npx skills` environment (`needs_founder_input: true`). With the capability-assembly build essentially complete, the deliberately *separate, parallel* measurement-first 10x axis is the next dev work: its Stage 0 eval-harness slice. Founder review/acceptance of `.agents/specs/assembly-1-0.md` remains open but non-blocking. Two-axis relationship and priority: `docs/decisions/2026-06-06-two-axes-capability-and-measurement.md`.
+- Next gate: measurement **Stage 1 — alignment loop** is the next dev work. Stage 0 is now complete: the machine-readable status block and CI shipped earlier (PR #14), and the eval-harness skeleton is now done (`plugins/assembly/scripts/eval_runner.py` + `.agents/evals/rubrics|fixtures/`, spec `.agents/specs/eval-harness.md`; `--selftest` scores both fixtures end to end in CI). Stage 1 is the `vision-keeper` reviewer + course-correction ledger backfill. See `.agents/plans/2026-06-01-assembly-10x-roadmap.md`.
+- Parked founder item (non-blocking, separate capability axis): the capability-assembly **live smoke run** in a real `npx skills` environment — procedure documented in `plugins/assembly/docs/SMOKE_TESTS.md`; run `qa` and record evidence in `.agents/qa/`. Founder review/acceptance of `.agents/specs/assembly-1-0.md` also remains open. Two-axis relationship: `docs/decisions/2026-06-06-two-axes-capability-and-measurement.md`.
 
 ## Next Recommended Skills
 
-- `qa` (run the documented capability-assembly live smoke procedure in a real `npx skills` env, then record evidence in `.agents/qa/`)
-- `build`/`plan` for the Stage 0 eval-harness slice of the measurement axis (the next dev work now that the capability build is complete)
+- `plan`/`spec` for measurement **Stage 1** (alignment loop): the `vision-keeper` reviewer and course-correction ledger backfill — the next dev work.
+- `qa` (founder-pending, parallel): run the capability-assembly live smoke procedure in a real `npx skills` env, then record evidence in `.agents/qa/`.
 
 ## 10x Direction (accepted 2026-06-01)
 
