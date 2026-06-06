@@ -18,6 +18,7 @@ This is the gateway for status, repair, retro, and routing. For scaffolding a ne
 - `references/agent-operating-protocol.md`: unclear prompts, missing prerequisites, skipped gates, and safety boundaries.
 - `references/workflows/project-lifecycle.md`: scaffold, status, repair, retro, and learning modes.
 - `references/hyper-project-notes.md`: only for retrofitting scattered Hyper-style notes.
+- `references/capability-acquisition.md`: the re-assemble-capabilities route when the project's stack grows.
 
 ## Workflow
 
@@ -40,6 +41,7 @@ This is the gateway for status, repair, retro, and routing. For scaffolding a ne
    - Skipped-gate risks.
    - Next gate, next recommended skill, one concrete next action.
 9. Include whether the project trail clearly answers what is being built, why it matters, and what good looks like. If not, recommend `product-discovery` or `spec` before build/release work.
+10. If the project's stack has grown since capabilities were last assembled (new platform or subproject), or the `Capabilities` section is empty for a detectable stack, offer an explicit re-assemble-capabilities route that runs the capability-acquisition behavior.
 
 ## Verification
 

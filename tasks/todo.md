@@ -32,6 +32,6 @@
 - [x] T1: Stack detection (`detect_stack.py` + signal reference)
 - [x] T2: Shared capability-acquisition behavior + persistence (AGENTS.md + status block); surface stays 13
 - [x] Checkpoint A: behavior spec-complete (detect→find→verify→install→persist), surface unchanged
-- [ ] T3: Call-site wiring (`init` seed, `build` task-scoped trigger, `project-status` re-run)
-- [ ] Checkpoint B: end-to-end scaffold → init/build/project-status → recorded in both surfaces
+- [x] T3: Call-site wiring (`init` seed, `build` task-scoped trigger, `project-status` re-run)
+- [ ] Checkpoint B: end-to-end scaffold → init/build/project-status run *recorded* in both surfaces (needs live `npx skills`; lands with T4)
 - [ ] T4: Boundaries, failure modes, smoke evidence
