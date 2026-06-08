@@ -13,7 +13,7 @@ never modify files and never block a tool call on a missing dependency.
 - SessionStart primer
 - Ask-first guard
 - Design constraints
-- Opting out
+- Configuration
 
 ## SessionStart primer — `session-start.sh`
 
@@ -37,17 +37,25 @@ runtime counterpart to the prose floor in [`docs/SPEC.md`](../docs/SPEC.md): the
 scaffold grants maximum default permissions for speed, and this guard re-introduces
 friction **only** at the irreversible boundaries.
 
-It re-prompts on:
+Whether it asks depends on the command's **class** and the project's **traffic
+state** (`Traffic state:` in `.agents/status.md`, founder-set, default `pre-live`).
+Per the SPEC autonomy model, a `pre-live` project runs pull requests, merges, and
+deploys without asking; a `live` project keeps merging to the default branch and
+deploying as founder gates. The irreversible-anywhere classes ask in both states.
 
-| Class | Examples (incl. flag-split, long-form, and refspec variants) |
-| --- | --- |
-| PR merge / ready / non-draft create / release | `gh pr merge`, `gh api …/pulls/N/merge`, `gh pr ready`, `gh pr create` (without `--draft`), `gh release create` |
-| Force / main / delete pushes | `git push --force` / `--force-with-lease` / `--mirror` / `+main`, `git push … main` / `HEAD:main`, `git push --delete`, including with `git -C <path>` / `git -c …` prefixes |
-| Branch, history & working-tree destruction | `git branch -D` / `--delete`, `git reset --hard`, `git clean -f…` / `--force`, `git checkout .`, `git restore .` |
-| Deploy / publish | `wrangler deploy` / `wrangler pages deploy`, `vercel … --prod`, `netlify deploy`, `npm/pnpm/yarn/bun publish` |
-| Infrastructure / catastrophic | `terraform apply/destroy`, `kubectl delete`, `aws s3 rm --recursive`, `dd`, `mkfs`, `rm -rf` (any flag order) |
+| Class | Examples (incl. flag-split, long-form, and refspec variants) | Asks (default) |
+| --- | --- | --- |
+| PR create / ready | `gh pr create` (without `--draft`), `gh pr ready` | never by traffic state — autonomous in both |
+| PR merge | `gh pr merge`, `gh api …/pulls/N/merge` | when `live` |
+| Deploy / publish / release | `wrangler deploy` / `pages deploy`, `vercel … --prod`, `netlify deploy`, `npm/pnpm/yarn/bun publish`, `gh release create` | when `live` |
+| Force / main / delete pushes | `git push --force` / `--force-with-lease` / `--mirror` / `+main`, `git push … main` / `HEAD:main`, `git push --delete`, including with `git -C <path>` / `git -c …` prefixes | always |
+| Branch, history & working-tree destruction | `git branch -D` / `--delete`, `git reset --hard`, `git clean -f…` / `--force`, `git checkout .`, `git restore .` | always |
+| Infrastructure / catastrophic | `terraform apply/destroy`, `kubectl delete`, `aws s3 rm --recursive`, `dd`, `mkfs`, `rm -rf` (any flag order) | always |
 
-Anything else passes through untouched (a normal `git push` of a topic branch, a
+Force-push, branch/worktree destruction, and catastrophic ops stay coarse
+always-ask in both states, because a flat-string matcher cannot reliably tell the
+default branch from a topic branch, or unmerged work from merged. Anything else
+passes through untouched (a normal `git push` of a topic branch, a
 `git restore --staged`, a `git clean -n` dry run, `gh pr create --draft`, and
 `npm install`/`run` are not flagged — those are routine).
 
@@ -76,8 +84,36 @@ approves. Extend the command classes by editing `ask-first-guard.sh`.
 - **`${CLAUDE_PLUGIN_ROOT}`** resolves to this bundle so the hook commands find
   these scripts regardless of where the plugin is installed.
 
-## Opting out
+## Configuration
 
-Plugin hooks run once the plugin is enabled. To disable them, disable the Assembly
-plugin, or remove an entry from `hooks/hooks.json` in your local cache. To tune the
-guard's command classes, edit `ask-first-guard.sh`.
+The floor is tuned per project without editing the script. Two layers decide
+whether each class asks; an explicit environment override always wins over traffic
+state.
+
+**Traffic state** — set `Traffic state: pre-live` or `Traffic state: live` in
+`.agents/status.md` (the scaffolder writes `pre-live`). This drives the PR-merge and
+deploy classes per the table above. Only the founder changes it.
+
+**Environment overrides** — each knob takes `off`/`0`/`false`/`no` (never ask) or
+`on`/`1`/`true`/`yes` (always ask); unset defers to traffic state:
+
+| Variable | Controls |
+| --- | --- |
+| `ASSEMBLY_ASK_FIRST` | master — `off` disables the entire guard |
+| `ASSEMBLY_ASK_FIRST_PR` | PR create / ready / merge |
+| `ASSEMBLY_ASK_FIRST_DEPLOY` | deploy / publish / release |
+| `ASSEMBLY_ASK_FIRST_PUSH` | force / main / delete pushes |
+| `ASSEMBLY_ASK_FIRST_BRANCH` | branch & working-tree destruction |
+| `ASSEMBLY_ASK_FIRST_DESTRUCTIVE` | terraform / kubectl / aws s3 rm / dd / mkfs / rm -rf |
+
+Set them **globally** in `~/.claude/settings.json` under `"env"`, or **per project**
+in `<project>/.claude/settings.json` (Claude Code layers user → project → local, so a
+project value overrides your global one). For example, to let merges and deploys run
+unattended on one repo while keeping the destructive floor:
+
+```json
+{ "env": { "ASSEMBLY_ASK_FIRST_PR": "off", "ASSEMBLY_ASK_FIRST_DEPLOY": "off" } }
+```
+
+To turn the guard off entirely, set `ASSEMBLY_ASK_FIRST=off`, disable the Assembly
+plugin, or remove the `PreToolUse` entry from `hooks/hooks.json`.

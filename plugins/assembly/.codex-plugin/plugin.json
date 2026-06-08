@@ -1,6 +1,6 @@
 {
   "name": "assembly",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "description": "Assembly is a human-led product-building toolkit for an eventual agentic app factory, spanning contextual next steps, project status, product discovery, prototypes, engineering delivery, QA, review, and launch.",
   "author": {
     "name": "Ben Sehl",
