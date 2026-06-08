@@ -40,24 +40,28 @@ friction **only** at the irreversible boundaries.
 Whether it asks depends on the command's **class** and the project's **traffic
 state** (`Traffic state:` in `.agents/status.md`, founder-set, default `pre-live`).
 Per the SPEC autonomy model, a `pre-live` project runs pull requests, merges, and
-deploys without asking; a `live` project keeps merging to the default branch and
-deploying as founder gates. The irreversible-anywhere classes ask in both states.
+deploys without asking; a `live` project re-gates merge-to-default and deploy. The
+always-ask floor is unconditional in every traffic state.
 
 | Class | Examples (incl. flag-split, long-form, and refspec variants) | Asks (default) |
 | --- | --- | --- |
-| PR create / ready | `gh pr create` (without `--draft`), `gh pr ready` | never by traffic state — autonomous in both |
+| PR create / ready | `gh pr create` (without `--draft`), `gh pr ready` | autonomous in both states |
 | PR merge | `gh pr merge`, `gh api …/pulls/N/merge` | when `live` |
 | Deploy / publish / release | `wrangler deploy` / `pages deploy`, `vercel … --prod`, `netlify deploy`, `npm/pnpm/yarn/bun publish`, `gh release create` | when `live` |
-| Force / main / delete pushes | `git push --force` / `--force-with-lease` / `--mirror` / `+main`, `git push … main` / `HEAD:main`, `git push --delete`, including with `git -C <path>` / `git -c …` prefixes | always |
-| Branch, history & working-tree destruction | `git branch -D` / `--delete`, `git reset --hard`, `git clean -f…` / `--force`, `git checkout .`, `git restore .` | always |
-| Infrastructure / catastrophic | `terraform apply/destroy`, `kubectl delete`, `aws s3 rm --recursive`, `dd`, `mkfs`, `rm -rf` (any flag order) | always |
+| Force / main / delete pushes | `git push --force` / `--force-with-lease` / `--mirror` / `+main`, `git push … main` / `HEAD:main`, `git push --delete`, including with `git -C <path>` / `git -c …` prefixes | always (floor) |
+| Branch, history & working-tree destruction | `git branch -D` / `--delete`, `git reset --hard`, `git clean -f…` / `--force`, `git checkout .`, `git restore .` | always (floor) |
+| Infrastructure / catastrophic | `terraform apply/destroy`, `kubectl delete`, `aws s3 rm --recursive`, `dd`, `mkfs` | always (floor) |
+| Recursive force delete | `rm -rf` (any flag order) | floor, **except** when every target is a temp (`/tmp`, `/private/tmp`, `/var/folders`, `$TMPDIR`) or project-relative path |
 
-Force-push, branch/worktree destruction, and catastrophic ops stay coarse
-always-ask in both states, because a flat-string matcher cannot reliably tell the
-default branch from a topic branch, or unmerged work from merged. Anything else
-passes through untouched (a normal `git push` of a topic branch, a
-`git restore --staged`, a `git clean -n` dry run, `gh pr create --draft`, and
-`npm install`/`run` are not flagged — those are routine).
+The floor classes ask in every traffic state and cannot be disabled — a flat-string
+matcher cannot reliably tell the default branch from a topic branch, or unmerged
+work from merged, so it stays coarse on purpose. The one ergonomic exception is
+`rm -rf`, which passes when every target is clearly a temp or project-relative path
+and still asks on an absolute non-temp path, `~`, a `$` variable, a glob, parent
+traversal (`..`), or a bare `/` or `.`. Anything else passes through untouched (a
+normal `git push` of a topic branch, a `git restore --staged`, a `git clean -n` dry
+run, `gh pr create --draft`, and `npm install`/`run` are not flagged — those are
+routine).
 
 **Limits.** It matches a flat command string, so it is defense in depth, not a
 sandbox. It cannot see:
@@ -86,34 +90,31 @@ approves. Extend the command classes by editing `ask-first-guard.sh`.
 
 ## Configuration
 
-The floor is tuned per project without editing the script. Two layers decide
-whether each class asks; an explicit environment override always wins over traffic
-state.
+Only the **PR** and **deploy** classes are tunable. The always-ask floor (force /
+main / delete pushes, branch & working-tree destruction, `terraform`/`kubectl`/etc.,
+and `rm -rf` outside temp/project paths) is unconditional and cannot be disabled —
+so a checked-in project setting can never silence it.
 
 **Traffic state** — set `Traffic state: pre-live` or `Traffic state: live` in
 `.agents/status.md` (the scaffolder writes `pre-live`). This drives the PR-merge and
 deploy classes per the table above. Only the founder changes it.
 
-**Environment overrides** — each knob takes `off`/`0`/`false`/`no` (never ask) or
+**Environment overrides** — two knobs, each `off`/`0`/`false`/`no` (never ask) or
 `on`/`1`/`true`/`yes` (always ask); unset defers to traffic state:
 
 | Variable | Controls |
 | --- | --- |
-| `ASSEMBLY_ASK_FIRST` | master — `off` disables the entire guard |
-| `ASSEMBLY_ASK_FIRST_PR` | PR create / ready / merge |
+| `ASSEMBLY_ASK_FIRST_PR` | PR create / ready / merge (one knob for all three) |
 | `ASSEMBLY_ASK_FIRST_DEPLOY` | deploy / publish / release |
-| `ASSEMBLY_ASK_FIRST_PUSH` | force / main / delete pushes |
-| `ASSEMBLY_ASK_FIRST_BRANCH` | branch & working-tree destruction |
-| `ASSEMBLY_ASK_FIRST_DESTRUCTIVE` | terraform / kubectl / aws s3 rm / dd / mkfs / rm -rf |
 
 Set them **globally** in `~/.claude/settings.json` under `"env"`, or **per project**
 in `<project>/.claude/settings.json` (Claude Code layers user → project → local, so a
-project value overrides your global one). For example, to let merges and deploys run
-unattended on one repo while keeping the destructive floor:
+project value overrides your global one). For example, to let PRs merge unattended on
+one repo regardless of its traffic state:
 
 ```json
-{ "env": { "ASSEMBLY_ASK_FIRST_PR": "off", "ASSEMBLY_ASK_FIRST_DEPLOY": "off" } }
+{ "env": { "ASSEMBLY_ASK_FIRST_PR": "off" } }
 ```
 
-To turn the guard off entirely, set `ASSEMBLY_ASK_FIRST=off`, disable the Assembly
-plugin, or remove the `PreToolUse` entry from `hooks/hooks.json`.
+To turn the guard off entirely, disable the Assembly plugin or remove the
+`PreToolUse` entry from `hooks/hooks.json`.

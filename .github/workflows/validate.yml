@@ -45,6 +45,9 @@ jobs:
       - name: Eval-harness selftest
         run: python3 plugins/assembly/scripts/eval_runner.py --selftest
 
+      - name: Ask-first guard behavior tests
+        run: bash plugins/assembly/hooks/test-ask-first-guard.sh
+
       - name: Whitespace check
         run: |
           base="${{ github.event.pull_request.base.sha }}"

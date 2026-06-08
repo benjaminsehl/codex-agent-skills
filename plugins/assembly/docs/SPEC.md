@@ -92,7 +92,7 @@ Always-ask floor (any traffic state):
 - Before merging to the default branch when traffic state is `live`.
 - Before skipping phase gates when risk materially changes.
 
-On the Claude Code runtime, the `ask-first-guard.sh` PreToolUse hook enforces this floor at the shell boundary: it reads the same `Traffic state:` field — so a `pre-live` project's PRs, merges, and deploys pass unprompted while `live` re-gates merge-to-default and deploy — and is tunable per class via `ASSEMBLY_ASK_FIRST_*` environment variables (see `hooks/README.md`). Codex relies on the prose floor and its own approval policy.
+On the Claude Code runtime, the `ask-first-guard.sh` PreToolUse hook enforces this floor at the shell boundary. It reads the same `Traffic state:` field, so a `pre-live` project's PRs, merges, and deploys pass unprompted while `live` re-gates merge-to-default and deploy (also overridable with `ASSEMBLY_ASK_FIRST_PR` / `ASSEMBLY_ASK_FIRST_DEPLOY`). The destructive floor — force/main/delete pushes, branch and working-tree destruction, and catastrophic ops — is unconditional and cannot be disabled by configuration; `rm -rf` is allowed through only when every target is a temp or project-relative path. See `hooks/README.md`. Codex relies on the prose floor and its own approval policy.
 
 Never:
 
