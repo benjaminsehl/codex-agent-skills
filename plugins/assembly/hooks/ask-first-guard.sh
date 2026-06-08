@@ -125,7 +125,9 @@ rm_safe() {
   local c tok safe=1
   c="$(printf '%s' "$cmd" | sed -E 's#\$\{?TMPDIR\}?#/tmp#g')"
   c="${c//\"/}"; c="${c//\'/}"   # drop quotes so quoted paths still classify
-  case "$c" in *'$'*|*'~'*|*'*'*) return 1 ;; esac
+  # Any metacharacter that can hide or expand a path defeats token classification
+  # (e.g. a backslash makes \/etc not start with /), so fail toward ask.
+  case "$c" in *'$'*|*'`'*|*'~'*|*'*'*|*'\'*) return 1 ;; esac
   printf '%s' "$c" | grep -Eq '(^| |/)\.\.(/| |$)' && return 1
   set -f
   for tok in $c; do
@@ -175,10 +177,10 @@ elif has "${GIT} +restore" && has ' \.( |$)' && ! has '\-\-staged'; then reason=
 # infrastructure / catastrophic
 elif has 'terraform +(apply|destroy)'; then reason="a terraform apply/destroy"
 elif has 'kubectl +delete'; then reason="deleting Kubernetes resources"
-elif has '(^| )aws +s3 +rm' && has '--recursive'; then reason="a recursive S3 delete"
-elif has '(^| )(dd +|mkfs)'; then reason="a raw disk write (dd/mkfs)"
+elif has '(^|[[:space:]]|/)aws +s3 +rm' && has '--recursive'; then reason="a recursive S3 delete"
+elif has '(^|[[:space:]]|/)(dd +|mkfs)'; then reason="a raw disk write (dd/mkfs)"
 # recursive force delete — passes only when every target is a temp/relative path
-elif has '(^| )rm ' \
+elif has '(^|[[:space:]]|/)rm[[:space:]]' \
      && has '(-[a-z]*r[a-z]*( |$)|--recursive)' \
      && has '(-[a-z]*f[a-z]*( |$)|--force)' \
      && ! rm_safe; then reason="a recursive force delete (rm -rf) outside a temp or project path"

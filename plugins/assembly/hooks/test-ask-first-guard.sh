@@ -112,6 +112,16 @@ expect ask "$NONE" "" 'rm -rf .'
 expect ask "$NONE" "" 'rm -rf "/etc/nginx"'
 expect ask "$NONE" "" 'rm -rf /tmp/ok /etc/bad'
 
+# --- rm -rf obfuscation / alternate invocation still asks ---
+expect ask "$NONE" "" 'rm -rf \/etc'                 # backslash-escaped absolute
+expect ask "$NONE" "" 'rm -rf \/'                    # backslash-escaped root
+expect ask "$NONE" "" 'rm -rf \/Users\/sai'
+expect ask "$NONE" "" 'FOO=bar rm -rf \/etc'         # env-assignment prefix
+expect ask "$NONE" "" 'rm -rf `echo /etc`'           # backtick command substitution
+expect ask "$NONE" "" '/bin/rm -rf /etc'             # absolute-path invocation
+expect ask "$NONE" "" '/usr/bin/rm -rf /etc'
+expect ask "$NONE" "" "$(printf '\trm -rf /etc')"    # tab-indented
+
 # --- benign commands always pass ---
 expect pass "$NONE" "" 'git push origin feature'
 expect pass "$NONE" "" 'gh pr create --draft -t x'
