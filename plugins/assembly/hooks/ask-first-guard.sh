@@ -10,10 +10,14 @@
 # This is the runtime counterpart to the prose floor in docs/SPEC.md. It is
 # defense in depth, not a sandbox: it matches a flat command string, so it cannot
 # see actions hidden behind shell aliases, script wrappers (`npm run deploy`,
-# `make ship`), or a protected branch that is the current checkout. It biases
-# toward a one-keystroke confirmation and fails closed (asks) if it cannot
-# evaluate. It cannot see money, credential, or external-messaging actions that
-# are not shell commands — those stay governed by the protocol and tool-level
+# `make ship`), or a protected branch that is the current checkout. It catches the
+# natural command forms an agent emits (including `;`/`&&`/`|`/subshell chaining and
+# tab spacing), but a flat matcher cannot defeat deliberate obfuscation — a verb
+# built from variables (`rm$IFS-rf`), run through `eval`/`bash -c`, or reached via
+# `xargs rm`/`find -delete` will pass; airtight enforcement would need a shell
+# parser. It biases toward a one-keystroke confirmation and fails closed (asks) if
+# it cannot evaluate. It cannot see money, credential, or external-messaging actions
+# that are not shell commands — those stay governed by the protocol and tool-level
 # permission prompts.
 #
 # The PR and deploy classes are tuned per project by the founder's `Traffic state:`
@@ -67,9 +71,9 @@ GIT='git( +(-c +[^ ]+|-C +[^ ]+|--git-dir(=[^ ]+| +[^ ]+)|--work-tree(=[^ ]+| +[
 
 # Force flags / refspecs: --force, --force-with-lease, short clusters containing f
 # (-f, -fu, -uf), --mirror (can delete every remote branch), and +refspec.
-FORCE='(--force( |$)|--force-with-lease|--mirror| -[a-z]*f[a-z]*( |$)| \+[A-Za-z])'
+FORCE='(--force([[:space:]]|$)|--force-with-lease|--mirror|[[:space:]]-[a-z]*f[a-z]*([[:space:]]|$)|[[:space:]]\+[A-Za-z])'
 # A "main"/"master" target as a bare arg, a :refspec dest, or a +refspec dest.
-MAIN='( |:|\+)(refs/heads/)?(main|master)( |$)'
+MAIN='([[:space:]]|:|\+)(refs/heads/)?(main|master)([[:space:]]|$)'
 
 # --- Configuration: traffic state + PR/deploy overrides ------------------------
 # Only the PR and deploy classes are tunable. The always-ask floor (force/main/
@@ -169,20 +173,20 @@ elif has "${GIT} +push" && has "$FORCE"; then reason="force-pushing or mirroring
 elif has "${GIT} +push" && has '(--delete| :)'; then reason="deleting a remote branch"
 elif has "${GIT} +push" && has "$MAIN"; then reason="pushing directly to main/master"
 # branch & history destruction
-elif has "${GIT} +branch +(-[a-z]*[dD]( |$)|--delete)"; then reason="deleting a branch"
+elif has "${GIT} +branch +(-[a-z]*[dD]([[:space:]]|$)|--delete)"; then reason="deleting a branch"
 elif has "${GIT} +reset" && has '--hard'; then reason="a hard reset (discards uncommitted work)"
-elif has "${GIT} +clean" && has '(--force|-[a-z]*f[a-z]*( |$))'; then reason="git clean (deletes untracked files)"
-elif has "${GIT} +checkout +(-- +)?\.( |$)"; then reason="discarding working-tree changes (git checkout .)"
-elif has "${GIT} +restore" && has ' \.( |$)' && ! has '\-\-staged'; then reason="discarding working-tree changes (git restore .)"
+elif has "${GIT} +clean" && has '(--force|-[a-z]*f[a-z]*([[:space:]]|$))'; then reason="git clean (deletes untracked files)"
+elif has "${GIT} +checkout +(--[[:space:]]+)?\.([[:space:]]|$)"; then reason="discarding working-tree changes (git checkout .)"
+elif has "${GIT} +restore" && has '[[:space:]]\.([[:space:]]|$)' && ! has '\-\-staged'; then reason="discarding working-tree changes (git restore .)"
 # infrastructure / catastrophic
 elif has 'terraform +(apply|destroy)'; then reason="a terraform apply/destroy"
 elif has 'kubectl +delete'; then reason="deleting Kubernetes resources"
-elif has '(^|[[:space:]]|/)aws +s3 +rm' && has '--recursive'; then reason="a recursive S3 delete"
-elif has '(^|[[:space:]]|/)(dd +|mkfs)'; then reason="a raw disk write (dd/mkfs)"
+elif has '(^|[[:space:]]|[/;&|(){}])aws +s3 +rm' && has '--recursive'; then reason="a recursive S3 delete"
+elif has '(^|[[:space:]]|[/;&|(){}])(dd +|mkfs)'; then reason="a raw disk write (dd/mkfs)"
 # recursive force delete — passes only when every target is a temp/relative path
-elif has '(^|[[:space:]]|/)rm[[:space:]]' \
-     && has '(-[a-z]*r[a-z]*( |$)|--recursive)' \
-     && has '(-[a-z]*f[a-z]*( |$)|--force)' \
+elif has '(^|[[:space:]]|[/;&|(){}])rm[[:space:]]' \
+     && has '(-[a-z]*r[a-z]*([[:space:]]|$)|--recursive)' \
+     && has '(-[a-z]*f[a-z]*([[:space:]]|$)|--force)' \
      && ! rm_safe; then reason="a recursive force delete (rm -rf) outside a temp or project path"
 fi
 

@@ -121,6 +121,17 @@ expect ask "$NONE" "" 'rm -rf `echo /etc`'           # backtick command substitu
 expect ask "$NONE" "" '/bin/rm -rf /etc'             # absolute-path invocation
 expect ask "$NONE" "" '/usr/bin/rm -rf /etc'
 expect ask "$NONE" "" "$(printf '\trm -rf /etc')"    # tab-indented
+expect ask "$NONE" "" "$(printf 'rm -rf\t/etc')"     # tab between flags and target
+expect ask "$NONE" "" "$(printf 'rm -r\t-f /etc')"   # tab between split flags
+expect ask "$NONE" "" '(rm -rf /etc)'                # subshell
+expect ask "$NONE" "" 'true&&rm -rf /etc'            # && with no spaces
+expect ask "$NONE" "" 'true;rm -rf /etc'             # ; separator
+expect ask "$NONE" "" 'echo|rm -rf /etc'             # pipe into rm
+
+# --- floor: command-chaining / tab variants of other verbs still ask ---
+expect ask "$NONE" "" 'true&&git push --force origin main'
+expect ask "$NONE" "" "$(printf 'git push -f\torigin main')"
+expect ask "$NONE" "" ';dd if=/dev/zero of=/dev/disk2'
 
 # --- benign commands always pass ---
 expect pass "$NONE" "" 'git push origin feature'
